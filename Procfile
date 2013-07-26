@@ -1,1 +1,1 @@
-web: node web.js
+web: node phrat_app/app.js
