@@ -2,11 +2,10 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path'),
-  base64url = require('b64url'),
-  crypto = require('crypto');
-
-var app = express();
+  , path = require('path')
+  , base64url = require('b64url')
+  , crypto = require('crypto')
+  , app = express()
 
 // all environments
 app.set('port', process.env.PORT || 3000);
