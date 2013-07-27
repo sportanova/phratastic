@@ -11,13 +11,25 @@ var express = require('express')
   , Sequelize = require('sequelize')
   , sequelize = new Sequelize('test', 'root');
 
+passport.serializeUser(function(user, done){
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done){
+  done(null, obj);
+});
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.cookieParser());
 app.use(express.bodyParser());
+app.use(express.session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,16 +42,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
-app.get('/channel', function(req, res){
-  res.render('channel', { title: 'Express' });
-});
-
 app.get('/login', function(req, res){
   res.render('login', { title: 'Express' });
-});
-
-app.get('/home', function(req, res){
-  res.render('home', { title: 'Express' });
 });
 
 passport.use(new FacebookStrategy({
@@ -48,21 +52,20 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate(..., function(err, user) {
-    //   if (err) { return done(err); }
-    //   done(null, user);
-    // });
-    console.log('anonymous function called');
-    var User = sequelize.define('User', {
-        username: Sequelize.STRING,
-        birthday: Sequelize.STRING,
-        message: Sequelize.STRING
-      });
+    process.nextTick(function (){
+      var newUser;
+      var User = sequelize.define('User', {
+          username: Sequelize.STRING,
+          birthday: Sequelize.STRING,
+          message: Sequelize.STRING
+        });
 
-    User.sync().success(function() {
-      var newUser = User.build({username: 'esteban', birthday: 'old'});
-      newUser.save().success(function() {
+      User.sync().success(function() {
+        newUser = User.build({username: profile.displayName, birthday: 'old'});
+        newUser.save().success(function() {
+        });
       });
+    return done(null, profile);
     });
   }
 ));
@@ -70,24 +73,10 @@ passport.use(new FacebookStrategy({
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
-
-  // var User = sequelize.define('User', {
-  //   username: Sequelize.STRING,
-  //   birthday: Sequelize.STRING,
-  //   message: Sequelize.STRING
-  // });
-
-  // User.sync().success(function() {
-  //   var newUser = User.build({username: fbInfo.registration.name, birthday: fbInfo.registration.birthday});
-  //   newUser.save().success(function() {
-  //   });
-  // });
-
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res){
+    res.redirect('/');
+  });
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
