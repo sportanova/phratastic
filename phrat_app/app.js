@@ -29,14 +29,15 @@ app.get('/register', function(req, res){
   res.render('register', { title: 'Express' });
 });
 
-app.post('/hey', function(req, res){
-  var part1, part2, signedRequest;
-  signedRequest = req.body.signed_request.split('.');
-  part1 = signedRequest[0];
-  part2 = signedRequest[1];
-  // var decodedPart1 = b64url.decode(part1);
-  // console.log(decodedPart1.toString());
+app.get('/login', function(req, res){
+  res.render('login', { title: 'Express' });
+});
 
+app.get('/channel', function(req, res){
+  res.render('channel', { title: 'Express' });
+});
+
+app.post('/hey', function(req, res){
   function parse_signed_request(signed_request, secret) {
     encoded_data = signed_request.split('.',2);
     // decode the data
@@ -56,9 +57,24 @@ app.post('/hey', function(req, res){
     }
     return data;
   }
-  var a = parse_signed_request(req.body.signed_request, 'b5c82944f3f4dee207900526d32fa45c');
-  console.log('signed request', a);
+  var fbInfo = parse_signed_request(req.body.signed_request, 'b5c82944f3f4dee207900526d32fa45c');
+  console.log('signed request', fbInfo);
   res.render('just_registered', { title: 'Express' });
+
+  var Sequelize = require('sequelize');
+  var sequelize = new Sequelize('test', 'root');
+
+  var User = sequelize.define('User', {
+    username: Sequelize.STRING,
+    birthday: Sequelize.STRING,
+    message: Sequelize.STRING
+  });
+
+  User.sync().success(function() {
+    var newUser = User.build({username: fbInfo.registration.name, birthday: fbInfo.registration.birthday});
+    newUser.save().success(function() {
+    });
+  });
 });
 
 
