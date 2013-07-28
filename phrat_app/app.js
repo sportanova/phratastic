@@ -53,15 +53,25 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
-      var newUser;
+      console.log(profile);
       var User = sequelize.define('User', {
-          username: Sequelize.STRING,
-          birthday: Sequelize.STRING,
-          message: Sequelize.STRING
+          id: Sequelize.STRING,
+          f_name: Sequelize.STRING,
+          l_name: Sequelize.STRING,
+          email: Sequelize.STRING,
+          location: Sequelize.STRING,
+          birthday: Sequelize.STRING
         });
 
       User.sync().success(function() {
-        newUser = User.build({username: profile.displayName, birthday: 'old'});
+        newUser = User.build({
+          id: profile.id,
+          f_name: profile.name.givenName,
+          l_name: profile.name.familyName,
+          email: profile.emails[0].value,
+          location: profile._json.location.name,
+          birthday: 'old'
+        });
         newUser.save().success(function() {
         });
       });
@@ -70,7 +80,7 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
