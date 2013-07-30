@@ -27,7 +27,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({ secret: 'asfda4845sdfas0sadf2' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.methodOverride());
@@ -46,6 +46,20 @@ app.get('/login', function(req, res){
   res.render('login', { title: 'Express' });
 });
 
+app.get('/loggedOut', function(req, res){
+  req.session.destroy(function(){
+  });
+  res.render('loggedOut', { title: 'Express' });
+});
+
+app.get('/home', function(req, res){
+  if(req.session.userId){
+    res.render('home', { title: 'Express' });
+  } else {
+    res.redirect('/');
+  }
+});
+
 passport.use(new FacebookStrategy({
     clientID: '696227333737725',
     clientSecret: 'b5c82944f3f4dee207900526d32fa45c',
@@ -53,7 +67,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
-      // console.log(profile);
       var User = sequelize.define('User', {
           id: Sequelize.STRING,
           f_name: Sequelize.STRING,
@@ -62,12 +75,9 @@ passport.use(new FacebookStrategy({
           location: Sequelize.STRING,
           birthday: Sequelize.STRING
       });
-      console.log('new login instance');
       User.find({ where: {id: profile.id}}).success(function(user){
         if(user){
-          console.log('id is present', user.dataValues.id);
         } else {
-          console.log('id is NOT present');
           User.sync().success(function() {
             newUser = User.build({
               id: profile.id,
@@ -82,7 +92,6 @@ passport.use(new FacebookStrategy({
           });
         }
       });
-
     return done(null, profile);
     });
   }
@@ -93,7 +102,9 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'u
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
-    res.redirect('/');
+    console.log(req.user.id);
+    req.session.userId = req.user.id;
+    res.redirect('home');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
