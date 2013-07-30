@@ -53,7 +53,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
-      console.log(profile);
+      // console.log(profile);
       var User = sequelize.define('User', {
           id: Sequelize.STRING,
           f_name: Sequelize.STRING,
@@ -61,20 +61,28 @@ passport.use(new FacebookStrategy({
           email: Sequelize.STRING,
           location: Sequelize.STRING,
           birthday: Sequelize.STRING
-        });
-
-      User.sync().success(function() {
-        newUser = User.build({
-          id: profile.id,
-          f_name: profile.name.givenName,
-          l_name: profile.name.familyName,
-          email: profile.emails[0].value,
-          location: profile._json.location.name,
-          birthday: 'old'
-        });
-        newUser.save().success(function() {
-        });
       });
+      console.log('new login instance');
+      User.find({ where: {id: profile.id}}).success(function(user){
+        if(user){
+          console.log('id is present', user.dataValues.id);
+        } else {
+          console.log('id is NOT present');
+          User.sync().success(function() {
+            newUser = User.build({
+              id: profile.id,
+              f_name: profile.name.givenName,
+              l_name: profile.name.familyName,
+              email: profile.emails[0].value,
+              // location: profile._json.location.name,
+              birthday: 'old'
+            });
+            newUser.save().success(function() {
+            });
+          });
+        }
+      });
+
     return done(null, profile);
     });
   }
@@ -86,7 +94,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
     res.redirect('/');
-  });
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
