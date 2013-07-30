@@ -52,13 +52,18 @@ app.get('/loggedOut', function(req, res){
   res.render('loggedOut', { title: 'Express' });
 });
 
-app.get('/home', function(req, res){
+var loggedIn = function(req, res, next){
   if(req.session.userId){
-    res.render('home', { title: 'Express' });
+    next();
   } else {
     res.redirect('/');
   }
+};
+
+app.get('/home', loggedIn, function(req, res){
+  res.render('home');
 });
+
 
 passport.use(new FacebookStrategy({
     clientID: '696227333737725',
@@ -96,6 +101,7 @@ passport.use(new FacebookStrategy({
     });
   }
 ));
+
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
 
