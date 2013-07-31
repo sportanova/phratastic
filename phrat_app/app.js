@@ -1,15 +1,15 @@
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path')
-  , base64url = require('b64url')
-  , crypto = require('crypto')
-  , app = express()
-  , passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy
-  , Sequelize = require('sequelize')
-  , sequelize = new Sequelize('test', 'root');
+var express = require('express'),
+routes = require('./routes'),
+user = require('./routes/user'),
+http = require('http'),
+path = require('path'),
+base64url = require('b64url'),
+crypto = require('crypto'),
+app = express(),
+passport = require('passport'),
+FacebookStrategy = require('passport-facebook').Strategy,
+Sequelize = require('sequelize'),
+sequelize = new Sequelize('test', 'root');
 
 passport.serializeUser(function(user, done){
   done(null, user);
