@@ -46,6 +46,30 @@ app.get('/login', function(req, res){
   res.render('login', { title: 'Express' });
 });
 
+app.get('/back', function(req, res){
+  res.sendfile(__dirname + '/views/back.html');
+});
+
+app.get('/backbone.js', function(req, res){
+  res.sendfile(__dirname + '/lib/backbone.js');
+});
+
+app.get('/underscore.js', function(req, res){
+  res.sendfile(__dirname + '/lib/underscore.js');
+});
+
+app.get('/jquery.js', function(req, res){
+  res.sendfile(__dirname + '/lib/jquery.js');
+});
+
+app.get('/appModel.js', function(req, res){
+  res.sendfile(__dirname + '/bb_models/appModel.js');
+});
+
+app.get('/appView.js', function(req, res){
+  res.sendfile(__dirname + '/bb_views/appView.js');
+});
+
 app.get('/loggedOut', function(req, res){
   req.session.destroy(function(){
   });
