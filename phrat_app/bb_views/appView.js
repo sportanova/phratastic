@@ -2,7 +2,9 @@ var AppView = Backbone.View.extend({
   initialize: function(params){
   },
 
+  tagName: 'div',
+
   render: function(){
-    this.$el.html('hey');
+    return this.$el.html('hey');
   }
 });
