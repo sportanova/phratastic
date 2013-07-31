@@ -47,7 +47,7 @@ app.get('/login', function(req, res){
 });
 
 app.get('/back', function(req, res){
-  res.sendfile(__dirname + '/views/back.html');
+  res.render('back');
 });
 
 app.get('/backbone.js', function(req, res){
