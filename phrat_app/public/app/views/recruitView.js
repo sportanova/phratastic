@@ -4,6 +4,6 @@ var RecruitView = Backbone.View.extend({
   },
 
   render: function(){
-    this.$el.html('hey');
+    return this.$el.html('working');
   }
 })

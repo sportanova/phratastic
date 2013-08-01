@@ -5,6 +5,6 @@ var RecruitsListView = Backbone.View.extend({
   tagName: 'div',
 
   render: function(){
-    return this.$el.html('what');
+    return this.$el.html(new RecruitView().render());
   }
 });
