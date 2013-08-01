@@ -6,6 +6,7 @@
     <script src='javascripts/lib/jquery.js'></script>
     <script src='javascripts/lib/underscore.js'></script>
     <script src='javascripts/lib/backbone.js'></script>
+    <script src='app/fakeRecruits.js'></script>
     <!-- models -->
     <script src='app/models/appModel.js'></script>
     <script src='app/models/recruitModel.js'></script>
@@ -19,7 +20,7 @@
     <script src='app/routes/router.js'></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        var app = new App();
+        window.app = new App();
         var appView = new AppView({model: app});
         var router = new Router;
         // router.on('route:test', function(actions) { 
