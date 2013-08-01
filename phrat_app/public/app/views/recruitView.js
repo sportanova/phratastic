@@ -4,10 +4,10 @@ var RecruitView = Backbone.View.extend({
 
   tagName: 'tr',
 
-  template: _.template('<td> <%= name %> </td>'),
+  template: _.template('<td> <%= name %> </td> <td> <%= age %> </td>'),
 
   render: function(){
-    console.log('recruitView',this);
-    return this.$el.html(this.template(this.model));
+    console.log('recruitView',this.model);
+    return this.$el.html(this.template(this.model.attributes));
   }
 })
