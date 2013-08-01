@@ -5,6 +5,6 @@ var AppView = Backbone.View.extend({
   tagName: 'div',
 
   render: function(){
-    return this.$el.html('hey');
+    return this.$el.html(new RecruitsListView().render());
   }
 });
