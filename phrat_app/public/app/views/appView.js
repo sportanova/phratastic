@@ -1,5 +1,5 @@
 var AppView = Backbone.View.extend({
-  initialize: function(params){
+  initialize: function(){
   },
 
   tagName: 'div',

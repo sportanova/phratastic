@@ -68,6 +68,31 @@ app.get('/home', loggedIn, function(req, res){
   res.render('home');
 });
 
+app.get('/recruits', loggedIn, function(req, res){
+  var User = sequelize.define('User', {
+    id: Sequelize.STRING,
+    f_name: Sequelize.STRING,
+    l_name: Sequelize.STRING,
+    email: Sequelize.STRING,
+    location: Sequelize.STRING,
+    birthday: Sequelize.STRING
+  });
+  var usersArray = [];
+  User.findAll().success(function(users){
+    // console.log(users[0]['dataValues']['f_name']);
+    for(var i = 0; i < users.length; i++) {
+      var jsonUser = {
+        firstName: users[i]['dataValues']['f_name'],
+        lastName: users[i]['dataValues']['l_name']
+      }
+      usersArray.push(jsonUser);
+    }
+    console.log(usersArray);
+    res.json(usersArray);
+  });
+  // res.JSON('home');
+});
+
 
 passport.use(new FacebookStrategy({
     clientID: '696227333737725',
@@ -77,12 +102,12 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
       var User = sequelize.define('User', {
-          id: Sequelize.STRING,
-          f_name: Sequelize.STRING,
-          l_name: Sequelize.STRING,
-          email: Sequelize.STRING,
-          location: Sequelize.STRING,
-          birthday: Sequelize.STRING
+        id: Sequelize.STRING,
+        f_name: Sequelize.STRING,
+        l_name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        location: Sequelize.STRING,
+        birthday: Sequelize.STRING
       });
       User.find({ where: {id: profile.id}}).success(function(user){
         if(user){

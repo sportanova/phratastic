@@ -1,4 +1,4 @@
-var recruits = [
+var fakeRecruits = [
   {
     name: 'Stephen',
     age: 23

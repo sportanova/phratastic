@@ -6,7 +6,6 @@ var Router = Backbone.Router.extend({
 
   initialize: function() {
   },
-  // /someroute#test
   test: function(){
     console.log('hey');
   }
