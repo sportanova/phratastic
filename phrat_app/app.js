@@ -9,7 +9,8 @@ app = express(),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
 Sequelize = require('sequelize'),
-sequelize = new Sequelize('test', 'root');
+sequelize = new Sequelize('test', 'root'),
+User = require('./models/User.js').User;
 
 passport.serializeUser(function(user, done){
   done(null, user);
@@ -69,17 +70,9 @@ app.get('/home', loggedIn, function(req, res){
 });
 
 app.get('/recruits', loggedIn, function(req, res){
-  var User = sequelize.define('User', {
-    id: Sequelize.STRING,
-    f_name: Sequelize.STRING,
-    l_name: Sequelize.STRING,
-    email: Sequelize.STRING,
-    location: Sequelize.STRING,
-    birthday: Sequelize.STRING
-  });
+  // User definition was here
   var usersArray = [];
   User.findAll().success(function(users){
-    // console.log(users[0]['dataValues']['f_name']);
     for(var i = 0; i < users.length; i++) {
       var jsonUser = {
         firstName: users[i]['dataValues']['f_name'],
@@ -90,7 +83,6 @@ app.get('/recruits', loggedIn, function(req, res){
     console.log(usersArray);
     res.json(usersArray);
   });
-  // res.JSON('home');
 });
 
 
@@ -101,14 +93,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
-      var User = sequelize.define('User', {
-        id: Sequelize.STRING,
-        f_name: Sequelize.STRING,
-        l_name: Sequelize.STRING,
-        email: Sequelize.STRING,
-        location: Sequelize.STRING,
-        birthday: Sequelize.STRING
-      });
+      // user was defined here
       User.find({ where: {id: profile.id}}).success(function(user){
         if(user){
         } else {

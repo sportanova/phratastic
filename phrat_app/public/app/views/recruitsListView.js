@@ -10,6 +10,5 @@ var RecruitsListView = Backbone.View.extend({
         return new RecruitView({model: recruit}).render();
       })
     )
-    // return this.$el.html(new RecruitView().render());
   }
 });

@@ -1,14 +1,14 @@
 var fakeRecruits = [
   {
-    name: 'Stephen',
-    age: 23
+    firstName: 'Stephen',
+    lastName: 'Portanova'
   },
   {
-    name: 'Josh',
-    age: 27
+    firstName: 'Josh',
+    lastName: 'Pagano'
   },
   {
-    name: 'Mike',
-    age: 32
+    firstName: 'Mike',
+    lastName: 'Ramos'
   }
 ]

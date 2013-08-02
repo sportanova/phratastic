@@ -1,7 +1,7 @@
 var App = Backbone.Model.extend({
   initialize: function(){
-    var expressInfo = new RecruitsList();
-    console.log(expressInfo.fetch());
+    // window.fetchInfo = new RecruitsList().fetch();
+    // console.log(fetchInfo.responseText);
     this.set('recruitsList', new RecruitsList(fakeRecruits));
   }
 });
