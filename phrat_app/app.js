@@ -8,9 +8,8 @@ crypto = require('crypto'),
 app = express(),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
-Sequelize = require('sequelize'),
-sequelize = new Sequelize('test', 'root'),
-User = require('./models/User.js').User;
+User = require('./models/User.js').User,
+pass = require('./models/passport.js');
 
 passport.serializeUser(function(user, done){
   done(null, user);
@@ -70,7 +69,6 @@ app.get('/home', loggedIn, function(req, res){
 });
 
 app.get('/recruits', loggedIn, function(req, res){
-  // User definition was here
   var usersArray = [];
   User.findAll().success(function(users){
     for(var i = 0; i < users.length; i++) {
@@ -84,38 +82,6 @@ app.get('/recruits', loggedIn, function(req, res){
     res.json(usersArray);
   });
 });
-
-
-passport.use(new FacebookStrategy({
-    clientID: '696227333737725',
-    clientSecret: 'b5c82944f3f4dee207900526d32fa45c',
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function (){
-      // user was defined here
-      User.find({ where: {id: profile.id}}).success(function(user){
-        if(user){
-        } else {
-          User.sync().success(function() {
-            newUser = User.build({
-              id: profile.id,
-              f_name: profile.name.givenName,
-              l_name: profile.name.familyName,
-              email: profile.emails[0].value,
-              // location: profile._json.location.name,
-              birthday: 'old'
-            });
-            newUser.save().success(function() {
-            });
-          });
-        }
-      });
-    return done(null, profile);
-    });
-  }
-));
-
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
 

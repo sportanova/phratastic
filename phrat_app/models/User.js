@@ -1,4 +1,4 @@
-Sequelize = require('sequelize'),
+var Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root');
 exports.User = sequelize.define('User', {
     id: Sequelize.STRING,
