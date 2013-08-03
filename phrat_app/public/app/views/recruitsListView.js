@@ -13,8 +13,6 @@ var RecruitsListView = Backbone.View.extend({
     this.collection.on("reset", this.render, this);
   },
 
-  tagName: 'div',
-
   render: function(){
     return this.$el.html(
       this.collection.map(function(recruit) {

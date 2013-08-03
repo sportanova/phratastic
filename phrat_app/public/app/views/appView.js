@@ -3,8 +3,6 @@ var AppView = Backbone.View.extend({
     this.model.on("reset", this.render, this);
   },
 
-  tagName: 'div',
-
   render: function(){
     return this.$el.html(new RecruitsListView().render());
   }

@@ -68,7 +68,8 @@ app.get('/home', loggedIn, function(req, res){
   res.render('home');
 });
 
-app.get('/recruits', loggedIn, function(req, res){
+// app.get('/recruits', loggedIn, function(req, res){
+app.get('/recruits', function(req, res){
   var usersArray = [];
   User.findAll().success(function(users){
     for(var i = 0; i < users.length; i++) {
