@@ -57,18 +57,25 @@ passport.use(new FacebookStrategy({
     process.nextTick(function (){
       var User = sequelize.define('User', {
         id: Sequelize.STRING,
-        f_name: Sequelize.STRING,
-        l_name: Sequelize.STRING,
-        email: Sequelize.STRING,
-        location: Sequelize.STRING,
-        birthday: Sequelize.STRING,
-        upVotes: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0
+        f_name: {
+          type: Sequelize.STRING,
+          defaultValue: 'n/a'
         },
-        downVotes: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0
+        l_name: {
+          type: Sequelize.STRING,
+          defaultValue: 'n/a'
+        },
+        email: {
+          type: Sequelize.STRING,
+          defaultValue: 'n/a'
+        },
+        location: {
+          type: Sequelize.STRING,
+          defaultValue: 'n/a'
+        },
+        birthday: {
+          type: Sequelize.STRING,
+          defaultValue: 'n/a'
         }
       });
 
