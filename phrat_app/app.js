@@ -145,8 +145,10 @@ app.get('/home', loggedIn, function(req, res){
 
 // should be loggedIn
 app.get('/memberConfirm', function(req, res){
-  console.log('confirm member');
-  res.send('hey');
+  console.log(req.session.userId);
+  User.find({ where: {id: req.session.userId}}).success(function(user) {
+    res.json(user);
+  });
 });
 
 // add loggedIn function
