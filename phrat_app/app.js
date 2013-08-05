@@ -48,6 +48,7 @@ app.get('/login', function(req, res){
   res.render('login', { title: 'Express' });
 });
 
+var User;
 passport.use(new FacebookStrategy({
     clientID: '696227333737725',
     clientSecret: 'b5c82944f3f4dee207900526d32fa45c',
@@ -55,7 +56,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
-      var User = sequelize.define('User', {
+      User = sequelize.define('User', {
         id: Sequelize.STRING,
         f_name: {
           type: Sequelize.STRING,
@@ -76,21 +77,43 @@ passport.use(new FacebookStrategy({
         birthday: {
           type: Sequelize.STRING,
           defaultValue: 'n/a'
+        },
+        role: {
+          type: Sequelize.STRING,
+          defaultValue: 'recruit'
         }
       });
 
-      User.sync().success(function() {
-        newUser = User.build({
-          id: profile.id,
-          f_name: profile.name.givenName,
-          l_name: profile.name.familyName,
-          email: profile.emails[0].value,
-          location: profile._json.location.name,
-          birthday: 'old'
-        });
-        newUser.save().success(function() {
-        });
+      User.find({ where: {id: profile.id}}).success(function(user){
+        if(user){
+        } else {
+          User.sync().success(function() {
+            newUser = User.build({
+              id: profile.id,
+              f_name: profile.name.givenName,
+              l_name: profile.name.familyName,
+              email: profile.emails[0].value,
+              location: profile._json.location.name,
+              birthday: 'old'
+            });
+            newUser.save().success(function() {
+            });
+          });
+        }
       });
+      // used to recreate the table since User.find errors if no table present
+      // User.sync().success(function() {
+      //   newUser = User.build({
+      //     id: profile.id,
+      //     f_name: profile.name.givenName,
+      //     l_name: profile.name.familyName,
+      //     email: profile.emails[0].value,
+      //     location: profile._json.location.name,
+      //     birthday: 'old'
+      //   });
+      //   newUser.save().success(function() {
+      //   });
+      // });
     return done(null, profile);
     });
   }
