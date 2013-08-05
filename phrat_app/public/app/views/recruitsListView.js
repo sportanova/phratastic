@@ -1,7 +1,6 @@
 var RecruitsListView = Backbone.View.extend({
   initialize: function(){
     this.collection = new RecruitsList();
-    var self = this;
     this.collection.fetch({
       reset: true,
       success: function(collection, response) {
