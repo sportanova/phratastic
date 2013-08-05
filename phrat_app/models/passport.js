@@ -1,6 +1,8 @@
 var passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
-User = require('./User.js').User;
+// User = require('./User.js').User,
+Sequelize = require('sequelize'),
+sequelize = new Sequelize('test', 'root');
 
 exports.pass = passport.use(new FacebookStrategy({
     clientID: '696227333737725',
@@ -9,6 +11,22 @@ exports.pass = passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
+      User = sequelize.define('User', {
+        id: Sequelize.STRING,
+        f_name: Sequelize.STRING,
+        l_name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        location: Sequelize.STRING,
+        birthday: Sequelize.STRING,
+        upVotes: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0
+        },
+        downVotes: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0
+        }
+      });
       User.find({ where: {id: profile.id}}).success(function(user){
         if(user){
         } else {
