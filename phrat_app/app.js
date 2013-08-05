@@ -156,16 +156,14 @@ app.post('/memberConfirm', function(req, res){
     if(res.req.body.confirm === 'nerd') {
       user.role = 'member';
       user.save().success(function() {});
+      res.redirect('/back#recruits');
     } else {
-      console.log('incorrect code')
+      res.redirect('/back#register');
     }
   });
-  
-  console.log('posted', res.req.body.confirm);
-  res.end('posted');
 });
 
-// add loggedIn function
+// should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
   User.findAll().success(function(users){
