@@ -145,10 +145,24 @@ app.get('/home', loggedIn, function(req, res){
 
 // should be loggedIn
 app.get('/memberConfirm', function(req, res){
-  console.log(req.session.userId);
   User.find({ where: {id: req.session.userId}}).success(function(user) {
     res.json(user);
   });
+});
+
+// should be loggedIn
+app.post('/memberConfirm', function(req, res){
+  User.find({ where: {id: req.session.userId}}).success(function(user) {
+    if(res.req.body.confirm === 'nerd') {
+      user.role = 'member';
+      user.save().success(function() {});
+    } else {
+      console.log('incorrect code')
+    }
+  });
+  
+  console.log('posted', res.req.body.confirm);
+  res.end('posted');
 });
 
 // add loggedIn function

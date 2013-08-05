@@ -8,7 +8,7 @@ var Router = Backbone.Router.extend({
 
   initialize: function() {
   },
-  // http://127.0.0.1:3000/back#test
+  
   recruits: function(){
     window.app = new App();
     var appView = new AppView({model: app});

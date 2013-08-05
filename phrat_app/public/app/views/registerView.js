@@ -17,7 +17,10 @@ var RegisterView = Backbone.View.extend({
         If you are already a fraternity member, enter your member \
         key here \
       </div> \
-      <input type="text"/> \
+      <form action="/memberConfirm" method="POST"> \
+        <input type="text" name="confirm"/> \
+        <input type="submit" value="submit" /> \
+      </form> \
       ');
   }
 })
