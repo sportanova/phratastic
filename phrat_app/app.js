@@ -93,7 +93,7 @@ passport.use(new FacebookStrategy({
               f_name: profile.name.givenName,
               l_name: profile.name.familyName,
               email: profile.emails[0].value,
-              location: profile._json.location.name,
+              // location: profile._json.location.name,
               birthday: 'old'
             });
             newUser.save().success(function() {
@@ -143,7 +143,13 @@ app.get('/home', loggedIn, function(req, res){
   res.render('home');
 });
 
-// app.get('/recruits', loggedIn, function(req, res){
+// should be loggedIn
+app.get('/memberConfirm', function(req, res){
+  console.log('confirm member');
+  res.send('hey');
+});
+
+// add loggedIn function
 app.get('/recruits', function(req, res){
   var usersArray = [];
   User.findAll().success(function(users){
@@ -154,7 +160,6 @@ app.get('/recruits', function(req, res){
       }
       usersArray.push(jsonUser);
     }
-    console.log(usersArray);
     res.json(usersArray);
   });
 });
@@ -164,6 +169,11 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'u
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
+    User.find({ where: {id: req.user.id}}).success(function(user){
+        if(user.dataValues.role === 'recruit') {
+          console.log('this is a recruit');
+        }
+      });
     req.session.userId = req.user.id;
     res.redirect('/back#recruits');
 });
