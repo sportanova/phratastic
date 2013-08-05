@@ -2,7 +2,8 @@ var Router = Backbone.Router.extend({
 
   routes: {
     'recruits': 'recruits',
-    'register': 'register'
+    'register': 'register',
+    'loggedIn': 'loggedIn'
   },
 
   initialize: function() {
@@ -18,7 +19,5 @@ var Router = Backbone.Router.extend({
     console.log('register');
     var registerView = new RegisterView();
     $('#main').append(registerView.render());
-
   }
-
 });

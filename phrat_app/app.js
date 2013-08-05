@@ -164,9 +164,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'u
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
-    console.log(req.user.id);
     req.session.userId = req.user.id;
-    res.redirect('home');
+    res.redirect('/back#recruits');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
