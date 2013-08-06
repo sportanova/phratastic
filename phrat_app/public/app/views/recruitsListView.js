@@ -16,12 +16,17 @@ var RecruitsListView = Backbone.View.extend({
     'click .upVote': function(e) {
       var that = this;
       var recruitID = e.target.className.split(' ')[1];
-      // _.each(this.collection.models, function(value) {
-      //   if(value.attributes.id === recruitID) {
-      //     value.attributes.upVote = value.attributes.upVote + 1;
-      //     console.log(value.attributes.upVote);
-      //   }
-      // });
+      _.each(this.collection.models, function(value) {
+        if(value.attributes.id === recruitID) {
+          value.save({addUpVote: 'addUpVote'}, 
+            {
+              success: function() {
+                console.log('should be saving model')
+              }
+            }
+          );
+        }
+      });
       
     },
     'click .downVote': function() {

@@ -164,16 +164,8 @@ app.post('/memberConfirm', function(req, res){
 });
 
 // should be loggedIn
-app.post('/recruits', function(req, res){
-  User.find({ where: {id: req.session.userId}}).success(function(user) {
-    if(res.req.body.confirm === 'nerd') {
-      user.role = 'member';
-      user.save().success(function() {});
-      res.redirect('/back#recruits');
-    } else {
-      res.redirect('/back#register');
-    }
-  });
+app.put('/recruits', function(req, res){
+  console.log('posted to recruits', res.req.body);
 });
 
 // should be loggedIn
