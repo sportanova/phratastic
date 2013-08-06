@@ -201,18 +201,18 @@ app.get('/recruits', function(req, res){
         }
       }
       console.log(userVotes);
-    });
-    for(var i = 0; i < users.length; i++) {
-      var jsonUser = {
-        id: users[i].id,
-        firstName: users[i].f_name,
-        lastName: users[i].l_name,
-        upVote: users[i].upVote || 0,
-        downVote: users[i].downVote || 0
+      for(var i = 0; i < users.length; i++) {
+        var jsonUser = {
+          id: users[i].id,
+          firstName: users[i].f_name,
+          lastName: users[i].l_name,
+          upVote: userVotes[users[i].id].upVotes,
+          downVote: userVotes[users[i].id].downVotes
+        }
+        usersArray.push(jsonUser);
       }
-      usersArray.push(jsonUser);
-    }
-    res.json(usersArray);
+      res.json(usersArray);
+    });
   })
 });
 
