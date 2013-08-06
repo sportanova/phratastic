@@ -121,8 +121,6 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-
-
 app.get('/back', function(req, res){
   res.render('back');
 });

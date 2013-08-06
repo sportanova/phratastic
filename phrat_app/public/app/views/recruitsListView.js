@@ -21,7 +21,6 @@ var RecruitsListView = Backbone.View.extend({
           value.save({addUpVote: 'addUpVote'}, 
             {
               success: function() {
-                console.log('should be saving model');
               }
             }
           );
@@ -33,11 +32,9 @@ var RecruitsListView = Backbone.View.extend({
       var recruitID = e.target.className.split(' ')[1];
       _.each(this.collection.models, function(value) {
         if(value.attributes.id === recruitID) {
-          console.log(value);
           value.save({addDownVote: 'addDownVote'},
             {
               success: function() {
-                console.log('should be saving model')
               }
             }
           );

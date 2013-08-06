@@ -4,7 +4,7 @@ var RecruitView = Backbone.View.extend({
 
   template: _.template('\
     <tr> \
-      <td> <img src="https://graph.facebook.com/100000770186683/picture" /> </td> \
+      <td> <img src="https://graph.facebook.com/<%= id %>/picture" /> </td> \
       <td> <%= firstName %> <%= lastName %> </td> \
       <td> \
         <ul> \
@@ -22,7 +22,6 @@ var RecruitView = Backbone.View.extend({
     '),
 
   render: function(){
-    console.log(this.model.attributes);
     return this.$el.html(this.template(this.model.attributes));
   }
 })
