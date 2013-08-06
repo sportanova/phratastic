@@ -99,8 +99,8 @@ passport.use(new FacebookStrategy({
             newUser.save().success(function() {
             });
           });
-          sequelize.query("INSERT INTO Votes (memberID, recruitID) VALUES (" + profile.id + "," + profile.id + ")").success(function(users) {
-          })
+          // sequelize.query("INSERT INTO Votes (memberID, recruitID) VALUES (" + profile.id + "," + profile.id + ")").success(function(users) {
+          // })
         }
       });
       // used to recreate the table since User.find errors if no table present
@@ -168,7 +168,8 @@ app.post('/memberConfirm', function(req, res){
 // should be loggedIn
 app.put('/recruits', function(req, res){
   if(res.req.body.addUpVote) {
-    console.log('add an upvote');
+    sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
+    })
   } else if(res.req.body.addDownVote) {
     console.log('add a downVote');
   }

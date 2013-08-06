@@ -34,7 +34,7 @@ var RecruitsListView = Backbone.View.extend({
       _.each(this.collection.models, function(value) {
         if(value.attributes.id === recruitID) {
           console.log(value);
-          value.save({addDownVote: 'addDownVote'}, 
+          value.save({addDownVote: 'addDownVote'},
             {
               success: function() {
                 console.log('should be saving model')
