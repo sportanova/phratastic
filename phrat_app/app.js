@@ -177,7 +177,7 @@ app.put('/recruits', function(req, res){
 // should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
-  sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID").success(function(users) {
+  sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID WHERE Users.role='recruit'").success(function(users) {
     for(var i = 0; i < users.length; i++) {
       var jsonUser = {
         id: users[i].id,
