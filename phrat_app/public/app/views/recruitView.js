@@ -11,13 +11,13 @@ var RecruitView = Backbone.View.extend({
       <td> \
         <ul> \
           <li> <button> Up </button> </li> \
-          <li> 5 </li> \
+          <li> <%= upVote %> </li> \
         </ul>\
       </td> \
       <td> \
         <ul> \
           <li> <button> Down </button> </li> \
-          <li> 2 </li> \
+          <li> <%= downVote %> </li> \
         </ul>\
       </td> \
     </tr> \
