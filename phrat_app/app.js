@@ -166,13 +166,15 @@ app.post('/memberConfirm', function(req, res){
 // should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
-  sequelize.query("SELECT * FROM Users").success(function(users) {
+  sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID").success(function(users) {
     for(var i = 0; i < users.length; i++) {
-      console.log(users[i].id);
+      console.log(users[i]);
       var jsonUser = {
         id: users[i].id,
         firstName: users[i].f_name,
         lastName: users[i].l_name,
+        upVote: users[i].upVote || 0,
+        downVote: users[i].downVote || 0
       }
       usersArray.push(jsonUser);
     }
