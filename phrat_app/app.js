@@ -164,6 +164,19 @@ app.post('/memberConfirm', function(req, res){
 });
 
 // should be loggedIn
+app.post('/memberConfirm', function(req, res){
+  User.find({ where: {id: req.session.userId}}).success(function(user) {
+    if(res.req.body.confirm === 'nerd') {
+      user.role = 'member';
+      user.save().success(function() {});
+      res.redirect('/back#recruits');
+    } else {
+      res.redirect('/back#register');
+    }
+  });
+});
+
+// should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
   sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID").success(function(users) {

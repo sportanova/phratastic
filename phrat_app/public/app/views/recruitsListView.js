@@ -12,6 +12,12 @@ var RecruitsListView = Backbone.View.extend({
     this.collection.on("reset", this.render, this);
   },
 
+  events: {
+    'click .upVote': function() {
+      console.log('clicked upVote');
+    }
+  },
+
   render: function(){
     return this.$el.html(
       this.collection.map(function(recruit) {
