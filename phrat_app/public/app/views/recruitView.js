@@ -2,6 +2,8 @@ var RecruitView = Backbone.View.extend({
   initialize: function(){
   },
 
+  tagName: 'table',
+  
   template: _.template('\
     <tr> \
       <td> <img src="https://graph.facebook.com/<%= id %>/picture" /> </td> \

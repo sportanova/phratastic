@@ -198,7 +198,13 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
     req.session.userId = req.user.id;
-    res.redirect('/back#recruits');
+    User.find({ where: {id: req.session.userId}}).success(function(user) {
+      if(user.dataValues.role === 'recruit') {
+        res.redirect('/back#register');
+      } else if(user.dataValues.role === 'member') {
+        res.redirect('/back#recruits');
+      }
+  });
 });
 
 http.createServer(app).listen(app.get('port'), function(){
