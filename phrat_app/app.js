@@ -199,10 +199,14 @@ app.get('/auth/facebook/callback',
   function(req, res){
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
-      if(user.dataValues.role === 'recruit') {
+      if(typeof variable !== 'undefined') {
+        if(user.dataValues.role === 'recruit') {
+          res.redirect('/back#register');
+        } else if(user.dataValues.role === 'member') {
+          res.redirect('/back#recruits');
+        }
+      } else {
         res.redirect('/back#register');
-      } else if(user.dataValues.role === 'member') {
-        res.redirect('/back#recruits');
       }
   });
 });
