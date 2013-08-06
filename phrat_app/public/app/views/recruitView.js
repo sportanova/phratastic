@@ -4,8 +4,8 @@ var RecruitView = Backbone.View.extend({
 
   template: _.template('\
     <tr> \
-      <td> <%= firstName %> </td> \
-      <td> <%= lastName %> </td> \
+      <td> <img src="https://graph.facebook.com/100000770186683/picture" /> </td> \
+      <td> <%= firstName %> <%= lastName %> </td> \
       <td> \
         <ul> \
           <li> <button class="upVote <%= id %>"> Up </button> </li> \
