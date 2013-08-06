@@ -199,7 +199,8 @@ app.get('/auth/facebook/callback',
   function(req, res){
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
-      if(typeof user !== 'undefined') {
+      if(user !== null) {
+        console.log(user);
         var role = user.dataValues.role;
         if(role === 'recruit') {
           res.redirect('/back#register');
