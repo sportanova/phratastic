@@ -99,6 +99,8 @@ passport.use(new FacebookStrategy({
             newUser.save().success(function() {
             });
           });
+          sequelize.query("INSERT INTO Votes (memberID, recruitID) VALUES (" + profile.id + "," + profile.id + ")").success(function(users) {
+          })
         }
       });
       // used to recreate the table since User.find errors if no table present
@@ -165,7 +167,11 @@ app.post('/memberConfirm', function(req, res){
 
 // should be loggedIn
 app.put('/recruits', function(req, res){
-  console.log('posted to recruits', res.req.body);
+  if(res.req.body.addUpVote) {
+    console.log('add an upvote');
+  } else if(res.req.body.addDownVote) {
+    console.log('add a downVote');
+  }
 });
 
 // should be loggedIn
@@ -173,7 +179,6 @@ app.get('/recruits', function(req, res){
   var usersArray = [];
   sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID").success(function(users) {
     for(var i = 0; i < users.length; i++) {
-      console.log(users[i]);
       var jsonUser = {
         id: users[i].id,
         firstName: users[i].f_name,
@@ -192,11 +197,6 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'u
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
-    User.find({ where: {id: req.user.id}}).success(function(user){
-      if(user.dataValues.role === 'recruit') {
-        console.log('this is a recruit');
-      }
-    });
     req.session.userId = req.user.id;
     res.redirect('/back#recruits');
 });
