@@ -164,7 +164,7 @@ app.post('/memberConfirm', function(req, res){
 });
 
 // should be loggedIn
-app.post('/memberConfirm', function(req, res){
+app.post('/recruits', function(req, res){
   User.find({ where: {id: req.session.userId}}).success(function(user) {
     if(res.req.body.confirm === 'nerd') {
       user.role = 'member';
@@ -193,19 +193,6 @@ app.get('/recruits', function(req, res){
     }
     res.json(usersArray);
   })
-  // User.findAll({ where: {role: 'recruit'}}).success(function(users){
-  //   for(var i = 0; i < users.length; i++) {
-  //     var jsonUser = {
-  //       id: users[i]['dataValues']['id'],
-  //       firstName: users[i]['dataValues']['f_name'],
-  //       lastName: users[i]['dataValues']['l_name'],
-  //       up: users[i]['dataValues']['upVote'],
-  //       down: users[i]['dataValues']['downVote']
-  //     }
-  //     usersArray.push(jsonUser);
-  //   }
-  //   res.json(usersArray);
-  // });
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));

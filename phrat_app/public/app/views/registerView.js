@@ -1,6 +1,5 @@
 var RegisterView = Backbone.View.extend({
   initialize: function() {
-    console.log(this);
     this.model.fetch({
       reset: true,
       success: function(collection, response) {

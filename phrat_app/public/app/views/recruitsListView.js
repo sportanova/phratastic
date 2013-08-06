@@ -13,8 +13,19 @@ var RecruitsListView = Backbone.View.extend({
   },
 
   events: {
-    'click .upVote': function() {
-      console.log('clicked upVote');
+    'click .upVote': function(e) {
+      var that = this;
+      var recruitID = e.target.className.split(' ')[1];
+      // _.each(this.collection.models, function(value) {
+      //   if(value.attributes.id === recruitID) {
+      //     value.attributes.upVote = value.attributes.upVote + 1;
+      //     console.log(value.attributes.upVote);
+      //   }
+      // });
+      
+    },
+    'click .downVote': function() {
+      console.log('clicked downVote', this);
     }
   },
 
