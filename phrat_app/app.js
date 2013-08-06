@@ -166,16 +166,31 @@ app.post('/memberConfirm', function(req, res){
 // should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
-  User.findAll().success(function(users){
+  sequelize.query("SELECT * FROM Users").success(function(users) {
     for(var i = 0; i < users.length; i++) {
+      console.log(users[i].id);
       var jsonUser = {
-        firstName: users[i]['dataValues']['f_name'],
-        lastName: users[i]['dataValues']['l_name']
+        id: users[i].id,
+        firstName: users[i].f_name,
+        lastName: users[i].l_name,
       }
       usersArray.push(jsonUser);
     }
     res.json(usersArray);
-  });
+  })
+  // User.findAll({ where: {role: 'recruit'}}).success(function(users){
+  //   for(var i = 0; i < users.length; i++) {
+  //     var jsonUser = {
+  //       id: users[i]['dataValues']['id'],
+  //       firstName: users[i]['dataValues']['f_name'],
+  //       lastName: users[i]['dataValues']['l_name'],
+  //       up: users[i]['dataValues']['upVote'],
+  //       down: users[i]['dataValues']['downVote']
+  //     }
+  //     usersArray.push(jsonUser);
+  //   }
+  //   res.json(usersArray);
+  // });
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
@@ -184,10 +199,10 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
     User.find({ where: {id: req.user.id}}).success(function(user){
-        if(user.dataValues.role === 'recruit') {
-          console.log('this is a recruit');
-        }
-      });
+      if(user.dataValues.role === 'recruit') {
+        console.log('this is a recruit');
+      }
+    });
     req.session.userId = req.user.id;
     res.redirect('/back#recruits');
 });

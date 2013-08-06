@@ -8,12 +8,23 @@ var RecruitView = Backbone.View.extend({
     <tr> \
       <td> <%= firstName %> </td> \
       <td> <%= lastName %> </td> \
-      <td> <button> Up </button> </td> \
-      <td> <button> Down </button> </td> \
+      <td> \
+        <ul> \
+          <li> <button> Up </button> </li> \
+          <li> 5 </li> \
+        </ul>\
+      </td> \
+      <td> \
+        <ul> \
+          <li> <button> Down </button> </li> \
+          <li> 2 </li> \
+        </ul>\
+      </td> \
     </tr> \
     '),
 
   render: function(){
+    console.log(this.model.attributes);
     return this.$el.html(this.template(this.model.attributes));
   }
 })
