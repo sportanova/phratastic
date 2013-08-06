@@ -156,7 +156,7 @@ app.post('/memberConfirm', function(req, res){
     if(res.req.body.confirm === 'nerd') {
       user.role = 'member';
       user.save().success(function() {});
-      res.redirect('/back#recruits');
+        res.redirect('/back#recruits');
     } else {
       res.redirect('/back#register');
     }
@@ -199,10 +199,11 @@ app.get('/auth/facebook/callback',
   function(req, res){
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
-      if(typeof variable !== 'undefined') {
-        if(user.dataValues.role === 'recruit') {
+      if(typeof user !== 'undefined') {
+        var role = user.dataValues.role;
+        if(role === 'recruit') {
           res.redirect('/back#register');
-        } else if(user.dataValues.role === 'member') {
+        } else if(role === 'member') {
           res.redirect('/back#recruits');
         }
       } else {
