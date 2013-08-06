@@ -177,7 +177,31 @@ app.put('/recruits', function(req, res){
 // should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
-  sequelize.query("SELECT * FROM Users LEFT JOIN Votes ON Users.id=Votes.recruitID WHERE Users.role='recruit'").success(function(users) {
+  sequelize.query("SELECT * FROM Users WHERE role='recruit'").success(function(users) {
+    var userVotes = {};
+    sequelize.query("SELECT * FROM Votes").success(function(votes) {
+      for(var i = 0; i < votes.length; i++) {
+        console.log('record' + i,votes[i])
+        recruit = votes[i];
+        if(userVotes[recruit.recruitID] && recruit.upVote){
+          userVotes[recruit.recruitID]['upVotes']++;
+        } else if(userVotes[recruit.recruitID] && recruit.downVote) {
+          userVotes[recruit.recruitID]['downVotes']++;
+        } else {
+          userVotes[recruit.recruitID] = {
+            id: recruit.recruitID
+          }
+          if(recruit.upVote) {
+            userVotes[recruit.recruitID]['upVotes'] = 1;
+            userVotes[recruit.recruitID]['downVotes'] = 0;
+          } else if (recruit.downVote) {
+            userVotes[recruit.recruitID]['upVotes'] = 0;
+            userVotes[recruit.recruitID]['downVotes'] = 1;
+          }
+        }
+      }
+      console.log(userVotes);
+    });
     for(var i = 0; i < users.length; i++) {
       var jsonUser = {
         id: users[i].id,
