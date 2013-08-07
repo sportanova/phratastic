@@ -40,9 +40,10 @@ var RecruitsListView = Backbone.View.extend({
       var recruitID = e.target.className.split(' ')[1];
       _.each(this.collection.models, function(value) {
         if(value.attributes.id === recruitID) {
-          value.save({addDownVote: 'addDownVote'},
+          value.save({ addDownVote: 'addDownVote' },
             {
               success: function() {
+                that.populateRecruitsModel();
               }
             }
           );
