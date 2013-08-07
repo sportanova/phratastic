@@ -2,14 +2,14 @@ var RecruitView = Backbone.View.extend({
   initialize: function(){
   },
 
-  tagName: 'table',
+  tagName: 'tr',
   
   template: _.template('\
-    <tr> \
       <td> <img src="https://graph.facebook.com/<%= id %>/picture" /> </td> \
       <td> <%= firstName %> <%= lastName %> </td> \
       <td> <%= location %> </td> \
       <td> <%= birthday %> </td> \
+      <td> <%= bio %> </td> \
       <td> \
         <ul> \
           <li> <button class="upVote <%= id %>"> Up </button> </li> \
@@ -22,8 +22,6 @@ var RecruitView = Backbone.View.extend({
           <li> <%= downVote %> </li> \
         </ul>\
       </td> \
-      <td> <%= bio %> </td> \
-    </tr> \
     '),
 
   render: function(){

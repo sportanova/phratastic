@@ -46,10 +46,16 @@ var RecruitsListView = Backbone.View.extend({
   },
 
   render: function(){
-    return this.$el.html(
+    return this.$el.html('<tr> \
+        <th>Photo</th> \
+        <th>Name</th> \
+        <th>Location</th> \
+        <th>Age</th> \
+        <th>Bio</th> \
+      </tr>').append(
       this.collection.map(function(recruit) {
         return new RecruitView({model: recruit}).render();
       })
-    )
+    );
   }
 });
