@@ -76,6 +76,10 @@ passport.use(new FacebookStrategy({
           type: Sequelize.STRING,
           defaultValue: 'n/a'
         },
+        bio: {
+          type: Sequelize.STRING,
+          defaultValue: 'N/A'
+        },
         role: {
           type: Sequelize.STRING,
           defaultValue: 'recruit'
@@ -91,14 +95,12 @@ passport.use(new FacebookStrategy({
               f_name: profile.name.givenName,
               l_name: profile.name.familyName,
               email: profile.emails[0].value,
-              // location: profile._json.location.name,
-              birthday: 'old'
+              location: typeof profile._json.location === 'object' ? profile._json.location.name : 'n/a',
+              bio: profile._json.bio
             });
             newUser.save().success(function() {
             });
           });
-          // sequelize.query("INSERT INTO Votes (memberID, recruitID) VALUES (" + profile.id + "," + profile.id + ")").success(function(users) {
-          // })
         }
       });
       // used to recreate the table since User.find errors if no table present
@@ -203,6 +205,7 @@ app.get('/recruits', function(req, res){
           id: users[i].id,
           firstName: users[i].f_name,
           lastName: users[i].l_name,
+          bio: users[i].bio,
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
         };
@@ -213,11 +216,12 @@ app.get('/recruits', function(req, res){
   });
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location', 'user_about_me']}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
+    console.log(req.user);
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
       if(user !== null) {
