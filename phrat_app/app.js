@@ -58,27 +58,27 @@ passport.use(new FacebookStrategy({
         id: Sequelize.STRING,
         f_name: {
           type: Sequelize.STRING,
-          defaultValue: 'n/a'
+          defaultValue: ''
         },
         l_name: {
           type: Sequelize.STRING,
-          defaultValue: 'n/a'
+          defaultValue: ''
         },
         email: {
           type: Sequelize.STRING,
-          defaultValue: 'n/a'
+          defaultValue: ''
         },
         location: {
           type: Sequelize.STRING,
-          defaultValue: 'n/a'
+          defaultValue: ''
         },
         birthday: {
           type: Sequelize.STRING,
-          defaultValue: 'n/a'
+          defaultValue: 0
         },
         bio: {
           type: Sequelize.STRING,
-          defaultValue: 'N/A'
+          defaultValue: ''
         },
         role: {
           type: Sequelize.STRING,
@@ -192,19 +192,21 @@ app.get('/recruits', function(req, res){
           }
         }
       }
-      console.log(userVotes);
       for(var i = 0; i < users.length; i++) {
+        var location = users[i].location.split(', ');
         var jsonUser = {
           id: users[i].id,
           firstName: users[i].f_name,
           lastName: users[i].l_name,
           bio: users[i].bio,
-          city: users[i].location[0],
-          state: users[i].location[1],
+          city: location[0] || '',
+          state: location[1] || '',
           birthday: new Date().getFullYear() - parseInt(users[i].birthday.substr(6,4)),
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
         };
+        // console.log(users[i].location.split(','));
+        console.log(jsonUser);
         usersArray.push(jsonUser);
       }
       res.json(usersArray);
