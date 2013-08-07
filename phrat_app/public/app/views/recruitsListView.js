@@ -44,13 +44,17 @@ var RecruitsListView = Backbone.View.extend({
       this.saveToDB(e, 'addDownVote');
     }
   },
+  
+  className: 'recruits',
+
+  tagName: 'table',
 
   render: function(){
     return this.$el.html('<tr> \
         <th></th> \
         <th>Name</th> \
-        <th>Location</th> \
         <th>Age</th> \
+        <th>Location</th> \
         <th>Bio</th> \
       </tr>').append(
       this.collection.map(function(recruit) {

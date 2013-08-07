@@ -102,6 +102,8 @@ passport.use(new FacebookStrategy({
             newUser.save().success(function() {
             });
           });
+          sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote, downVote) VALUES (" + 1 + "," + profile.id + "," + 0 + "," + 0 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=0").success(function(users) {
+    });
         }
       });
     return done(null, profile);
@@ -177,7 +179,9 @@ app.get('/recruits', function(req, res){
           userVotes[recruit.recruitID]['downVotes']++;
         } else {
           userVotes[recruit.recruitID] = {
-            id: recruit.recruitID
+            id: recruit.recruitID,
+            upVotes: 0,
+            downVotes: 0
           };
           if(recruit.upVote) {
             userVotes[recruit.recruitID]['upVotes'] = 1;
@@ -188,13 +192,15 @@ app.get('/recruits', function(req, res){
           }
         }
       }
+      console.log(userVotes);
       for(var i = 0; i < users.length; i++) {
         var jsonUser = {
           id: users[i].id,
           firstName: users[i].f_name,
           lastName: users[i].l_name,
           bio: users[i].bio,
-          location: users[i].location,
+          city: users[i].location[0],
+          state: users[i].location[1],
           birthday: new Date().getFullYear() - parseInt(users[i].birthday.substr(6,4)),
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
@@ -211,7 +217,6 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'u
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res){
-    console.log(req.user);
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
       if(user !== null) {
