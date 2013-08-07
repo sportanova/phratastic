@@ -47,7 +47,7 @@ var RecruitsListView = Backbone.View.extend({
 
   render: function(){
     return this.$el.html('<tr> \
-        <th>Photo</th> \
+        <th></th> \
         <th>Name</th> \
         <th>Location</th> \
         <th>Age</th> \
