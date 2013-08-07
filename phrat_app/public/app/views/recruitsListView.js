@@ -1,6 +1,11 @@
 var RecruitsListView = Backbone.View.extend({
   initialize: function(){
     this.collection = new RecruitsList();
+    this.populateRecruitsModel();
+    this.collection.on("reset", this.render, this);
+  },
+
+  populateRecruitsModel: function() {
     this.collection.fetch({
       reset: true,
       success: function(collection, response) {
@@ -9,7 +14,6 @@ var RecruitsListView = Backbone.View.extend({
         console.log('error');
       }
     });
-    this.collection.on("reset", this.render, this);
   },
 
   events: {
@@ -21,19 +25,10 @@ var RecruitsListView = Backbone.View.extend({
           value.save({ addUpVote: 'addUpVote' }, 
             {
               success: function() {
-                console.log('success');
+                that.populateRecruitsModel();
               },
               error: function() {
                 console.log('error');
-                that.collection.fetch({
-                reset: true,
-                success: function(collection, response) {
-                  console.log('success');
-                },
-                error: function() {
-                  console.log('error');
-                }
-              });
               }
             }
           );
