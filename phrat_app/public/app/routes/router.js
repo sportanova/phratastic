@@ -19,7 +19,7 @@ var Router = Backbone.Router.extend({
   
   recruits: function(){
     $('#main').empty();
-    window.app = new App();
+    app = new App();
     var appView = new AppView({model: app});
     $('#main').append(appView.render());
   },

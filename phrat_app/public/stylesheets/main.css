@@ -1,8 +1,8 @@
 .picture {
-  width: 200px;
+  width: 230px;
 }
 
-.profilePic {
+.picture img {
   width: 12em;
   border-radius: 2em;
 }
@@ -16,17 +16,23 @@ ul {
   list-style-type: none;
 }
 
-ul li {
-}
-
 .recruitInfo {
   width: 45%;
+  /*background: red;*/
+  border-radius: 2em;
+  height: 60px;
 }
 
 .recruitInfo ul {
   font-size: 18px;
   font-weight: bold;
-  background: gray;
+  /*background: gray;*/
+  margin: -80px 0 0 0;
+}
+
+.recruitInfo div {
+  /*background: green;*/
+  margin: 10px 0 0 15px;
 }
 
 .recruitInfo ul li {
@@ -50,6 +56,5 @@ ul li {
 }
 
 .birthday {
-  background: green;
   width: 5%;
 }

@@ -3,7 +3,6 @@ var RecruitsListView = Backbone.View.extend({
     this.collection = new RecruitsList();
     this.populateRecruitsModel();
     this.collection.on("reset", this.render, this);
-    console.log(this);
   },
 
   populateRecruitsModel: function() {
