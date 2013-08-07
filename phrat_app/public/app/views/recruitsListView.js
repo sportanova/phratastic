@@ -16,39 +16,31 @@ var RecruitsListView = Backbone.View.extend({
     });
   },
 
+  saveToDB: function(e, vote) {
+    var that = this;
+    var recruitID = e.target.className.split(' ')[1];
+    _.each(this.collection.models, function(value) {
+      if(value.attributes.id === recruitID) {
+        value.save({ vote: vote }, 
+          {
+            success: function() {
+              that.populateRecruitsModel();
+            },
+            error: function() {
+              console.log('error');
+            }
+          }
+        );
+      }
+    });
+  },
+
   events: {
     'click .upVote': function(e) {
-      var that = this;
-      var recruitID = e.target.className.split(' ')[1];
-      _.each(this.collection.models, function(value) {
-        if(value.attributes.id === recruitID) {
-          value.save({ addUpVote: 'addUpVote' }, 
-            {
-              success: function() {
-                that.populateRecruitsModel();
-              },
-              error: function() {
-                console.log('error');
-              }
-            }
-          );
-        }
-      });
+      this.saveToDB(e, 'addUpVote');
     },
     'click .downVote': function(e) {
-      var that = this;
-      var recruitID = e.target.className.split(' ')[1];
-      _.each(this.collection.models, function(value) {
-        if(value.attributes.id === recruitID) {
-          value.save({ addDownVote: 'addDownVote' },
-            {
-              success: function() {
-                that.populateRecruitsModel();
-              }
-            }
-          );
-        }
-      });
+      this.saveToDB(e, 'addDownVote');
     }
   },
 

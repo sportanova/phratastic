@@ -161,10 +161,10 @@ app.post('/memberConfirm', function(req, res){
 
 // should be loggedIn
 app.put('/recruits', function(req, res){
-  if(res.req.body.addUpVote) {
+  if(res.req.body.vote === 'addUpVote') {
     sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
     })
-  } else if(res.req.body.addDownVote) {
+  } else if(res.req.body.vote === 'addDownVote') {
     sequelize.query("INSERT INTO Votes (memberID, recruitID, downVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=1, upVote=0").success(function(users) {
     })
   }
@@ -178,7 +178,6 @@ app.get('/recruits', function(req, res){
     var userVotes = {};
     sequelize.query("SELECT * FROM Votes").success(function(votes) {
       for(var i = 0; i < votes.length; i++) {
-        console.log('record' + i,votes[i])
         recruit = votes[i];
         if(userVotes[recruit.recruitID] && recruit.upVote){
           userVotes[recruit.recruitID]['upVotes']++;
@@ -197,7 +196,6 @@ app.get('/recruits', function(req, res){
           }
         }
       }
-      console.log(userVotes);
       for(var i = 0; i < users.length; i++) {
         var jsonUser = {
           id: users[i].id,
@@ -221,7 +219,6 @@ app.get('/auth/facebook/callback',
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {
       if(user !== null) {
-        console.log(user);
         var role = user.dataValues.role;
         if(role === 'recruit') {
           res.redirect('/back#register');
