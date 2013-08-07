@@ -13,6 +13,8 @@ var Router = Backbone.Router.extend({
   home: function() {
     $('#main').empty();
     console.log('home');
+    var homeView = new HomeView();
+    $('#main').append(homeView.render());
   },
   
   recruits: function(){

@@ -4,13 +4,9 @@ var HomeView = Backbone.View.extend({
   render: function(){
     return this.$el.html(
       '<div> \
-        If you are already a fraternity member, enter your member \
-        key here \
-      </div> \
-      <form action="/memberConfirm" method="POST"> \
-        <input type="text" name="confirm"/> \
-        <input type="submit" value="submit" /> \
-      </form> \
+        <a href="/auth/facebook"> Login </a> \
+        <a href="/loggedOut"> Logout </a> \
+       </div> \
       ');
   }
 });
