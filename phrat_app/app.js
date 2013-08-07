@@ -96,6 +96,7 @@ passport.use(new FacebookStrategy({
               l_name: profile.name.familyName,
               email: profile.emails[0].value,
               location: typeof profile._json.location === 'object' ? profile._json.location.name : 'n/a',
+              birthday: profile._json.birthday,
               bio: profile._json.bio
             });
             newUser.save().success(function() {
@@ -103,19 +104,6 @@ passport.use(new FacebookStrategy({
           });
         }
       });
-      // used to recreate the table since User.find errors if no table present
-      // User.sync().success(function() {
-      //   newUser = User.build({
-      //     id: profile.id,
-      //     f_name: profile.name.givenName,
-      //     l_name: profile.name.familyName,
-      //     email: profile.emails[0].value,
-      //     location: profile._json.location.name,
-      //     birthday: 'old'
-      //   });
-      //   newUser.save().success(function() {
-      //   });
-      // });
     return done(null, profile);
     });
   }
@@ -206,6 +194,8 @@ app.get('/recruits', function(req, res){
           firstName: users[i].f_name,
           lastName: users[i].l_name,
           bio: users[i].bio,
+          location: users[i].location,
+          birthday: new Date().getFullYear() - parseInt(users[i].birthday.substr(6,4)),
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
         };
@@ -216,7 +206,7 @@ app.get('/recruits', function(req, res){
   });
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location', 'user_about_me']}));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location', 'user_about_me', 'user_birthday']}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),

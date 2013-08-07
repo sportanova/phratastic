@@ -3,6 +3,7 @@ var RecruitsListView = Backbone.View.extend({
     this.collection = new RecruitsList();
     this.populateRecruitsModel();
     this.collection.on("reset", this.render, this);
+    console.log(this);
   },
 
   populateRecruitsModel: function() {
@@ -21,7 +22,7 @@ var RecruitsListView = Backbone.View.extend({
     var recruitID = e.target.className.split(' ')[1];
     _.each(this.collection.models, function(value) {
       if(value.attributes.id === recruitID) {
-        value.save({ vote: vote }, 
+        value.save({ vote: vote },
           {
             success: function() {
               that.populateRecruitsModel();
