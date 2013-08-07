@@ -2,20 +2,27 @@ var Router = Backbone.Router.extend({
 
   routes: {
     'recruits': 'recruits',
-    'register': 'register',
-    'loggedIn': 'loggedIn'
+    'recruitHome': 'recruitHome',
+    'loggedIn': 'loggedIn',
+    'home': 'home'
   },
 
   initialize: function() {
   },
+
+  home: function() {
+    $('#main').empty();
+    console.log('home');
+  },
   
   recruits: function(){
+    $('#main').empty();
     window.app = new App();
     var appView = new AppView({model: app});
     $('#main').append(appView.render());
   },
 
-  register: function(){
+  recruitHome: function(){
     $('#main').empty();
     var registerModel = new RegisterModel();
     var registerView = new RegisterView({ model: registerModel });

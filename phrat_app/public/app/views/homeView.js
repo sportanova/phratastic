@@ -1,4 +1,4 @@
-var RegisterView = Backbone.View.extend({
+var HomeView = Backbone.View.extend({
   initialize: function() {
   },
   render: function(){

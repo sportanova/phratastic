@@ -154,7 +154,7 @@ app.post('/memberConfirm', function(req, res){
       user.save().success(function() {});
         res.redirect('/back#recruits');
     } else {
-      res.redirect('/back#register');
+      res.redirect('/back#recruitHome');
     }
   });
 });
@@ -163,10 +163,10 @@ app.post('/memberConfirm', function(req, res){
 app.put('/recruits', function(req, res){
   if(res.req.body.vote === 'addUpVote') {
     sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
-    })
+    });
   } else if(res.req.body.vote === 'addDownVote') {
     sequelize.query("INSERT INTO Votes (memberID, recruitID, downVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=1, upVote=0").success(function(users) {
-    })
+    });
   }
   res.json('');
 });
@@ -186,7 +186,7 @@ app.get('/recruits', function(req, res){
         } else {
           userVotes[recruit.recruitID] = {
             id: recruit.recruitID
-          }
+          };
           if(recruit.upVote) {
             userVotes[recruit.recruitID]['upVotes'] = 1;
             userVotes[recruit.recruitID]['downVotes'] = 0;
@@ -203,12 +203,12 @@ app.get('/recruits', function(req, res){
           lastName: users[i].l_name,
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
-        }
+        };
         usersArray.push(jsonUser);
       }
       res.json(usersArray);
     });
-  })
+  });
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location']}));
@@ -221,12 +221,12 @@ app.get('/auth/facebook/callback',
       if(user !== null) {
         var role = user.dataValues.role;
         if(role === 'recruit') {
-          res.redirect('/back#register');
+          res.redirect('/back#recruitHome');
         } else if(role === 'member') {
           res.redirect('/back#recruits');
         }
       } else {
-        res.redirect('/back#register');
+        res.redirect('/back#recruitHome');
       }
   });
 });
