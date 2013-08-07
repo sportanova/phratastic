@@ -18,9 +18,22 @@ var RecruitsListView = Backbone.View.extend({
       var recruitID = e.target.className.split(' ')[1];
       _.each(this.collection.models, function(value) {
         if(value.attributes.id === recruitID) {
-          value.save({addUpVote: 'addUpVote'}, 
+          value.save({ addUpVote: 'addUpVote' }, 
             {
               success: function() {
+                console.log('success');
+              },
+              error: function() {
+                console.log('error');
+                that.collection.fetch({
+                reset: true,
+                success: function(collection, response) {
+                  console.log('success');
+                },
+                error: function() {
+                  console.log('error');
+                }
+              });
               }
             }
           );

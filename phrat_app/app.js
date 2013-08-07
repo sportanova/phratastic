@@ -3,13 +3,9 @@ routes = require('./routes'),
 user = require('./routes/user'),
 http = require('http'),
 path = require('path'),
-base64url = require('b64url'),
-crypto = require('crypto'),
 app = express(),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
-// User = require('./models/User.js').User,
-// pass = require('./models/passport.js'),
 Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root');
 
@@ -172,6 +168,7 @@ app.put('/recruits', function(req, res){
     sequelize.query("INSERT INTO Votes (memberID, recruitID, downVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=1, upVote=0").success(function(users) {
     })
   }
+  res.json();
 });
 
 // should be loggedIn
