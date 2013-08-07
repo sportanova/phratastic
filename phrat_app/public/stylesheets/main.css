@@ -1,3 +1,7 @@
+.picture {
+  width: 200px;
+}
+
 .profilePic {
   width: 12em;
   border-radius: 2em;
@@ -8,28 +12,44 @@
   border-collapse: collapse;
 }
 
-tr {
-  /*border: solid;*/
+ul {
+  list-style-type: none;
+}
+
+ul li {
+}
+
+.recruitInfo {
+  width: 45%;
+}
+
+.recruitInfo ul {
+  font-size: 18px;
+  font-weight: bold;
+  background: gray;
+}
+
+.recruitInfo ul li {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
 }
 
 .recruit td {
   border-bottom: solid gray 2px;
-  vertical-align: middle;
-  padding: 12px 0 10px 0;
-  text-align: center;
+  padding: 10px 0 10px 0;
 }
 
 .name {
-  font-weight: bold;
-  font-size: 18px;
-  vertical-align: middle;
-  width: 10%;
+  width: 45%;
 }
 
 .location {
-
+  width: 45%;
 }
 
-.age {
+.birthday {
+  background: green;
   width: 5%;
 }

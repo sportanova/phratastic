@@ -6,11 +6,15 @@ var RecruitView = Backbone.View.extend({
   tagName: 'tr',
   
   template: _.template('\
-      <td> <img class="profilePic" src="https://graph.facebook.com/<%= id %>/picture/?type=large&width=200&height=200" /> </td> \
-      <td class="name"> <%= firstName %> </br> <%= lastName %> </td> \
-      <td class="birthday"> <%= birthday %> </td> \
-      <td class="location"> <%= city %> </br> <%= state %> </td> \
-      <td class="bio"> <%= bio %> </td> \
+      <td class="picture"> <img class="profilePic" src="https://graph.facebook.com/<%= id %>/picture/?type=large&width=200&height=200" /> </td> \
+      <td class="recruitInfo"> \
+        <ul> \
+          <li class="name"> <%= firstName %> <%= lastName %> </li> \
+          <li class="birthday"> <%= birthday %> </li> \
+          <li class="location"> <%= city %>, <%= state %> </li> \
+        </ul> \
+        <div class="bio"> <%= bio %> </div> \
+      </td> \
       <td> \
         <ul> \
           <li> <button class="upVote <%= id %>"> Up </button> </li> \

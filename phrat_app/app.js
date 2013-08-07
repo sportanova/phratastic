@@ -95,7 +95,7 @@ passport.use(new FacebookStrategy({
               f_name: profile.name.givenName,
               l_name: profile.name.familyName,
               email: profile.emails[0].value,
-              location: typeof profile._json.location === 'object' ? profile._json.location.name : 'n/a',
+              location: typeof profile._json.location === 'object' ? profile._json.location.name : '',
               birthday: profile._json.birthday,
               bio: profile._json.bio
             });
