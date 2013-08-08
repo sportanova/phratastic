@@ -4,11 +4,8 @@ path = require('path'),
 app = express(),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
-dbInfo = require('./dbInfo.js'),
 Sequelize = require('sequelize'),
-sequelize = new Sequelize(dbInfo.d.db, dbInfo.d.user);
-
-console.log(dbInfo);
+sequelize = new Sequelize('test', 'root', process.env.mySQLPW);
 
 passport.serializeUser(function(user, done){
   done(null, user);
@@ -44,8 +41,8 @@ app.get('/', function(req, res) {
 
 var User;
 passport.use(new FacebookStrategy({
-    clientID: '696227333737725',
-    clientSecret: 'b5c82944f3f4dee207900526d32fa45c',
+    clientID: process.env.phratasticDevClientID,
+    clientSecret: process.env.phratasticDevSecretID,
     callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
