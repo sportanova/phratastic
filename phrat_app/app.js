@@ -40,11 +40,6 @@ if ('development' == app.get('env')) {
 app.get('/', function(req, res) {
   res.redirect('/back#home');
 });
-app.get('/users', user.list);
-
-app.get('/login', function(req, res){
-  res.render('login', { title: 'Express' });
-});
 
 var User;
 passport.use(new FacebookStrategy({
@@ -103,7 +98,7 @@ passport.use(new FacebookStrategy({
             });
           });
           sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote, downVote) VALUES (" + 1 + "," + profile.id + "," + 0 + "," + 0 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=0").success(function(users) {
-    });
+          });
         }
       });
     return done(null, profile);
@@ -133,14 +128,12 @@ app.get('/home', loggedIn, function(req, res){
   res.render('home');
 });
 
-// should be loggedIn
 app.get('/memberConfirm', function(req, res){
   User.find({ where: {id: req.session.userId}}).success(function(user) {
     res.json(user);
   });
 });
 
-// should be loggedIn
 app.post('/memberConfirm', function(req, res){
   User.find({ where: {id: req.session.userId}}).success(function(user) {
     if(res.req.body.confirm === 'nerd') {
@@ -153,7 +146,6 @@ app.post('/memberConfirm', function(req, res){
   });
 });
 
-// should be loggedIn
 app.put('/recruits', function(req, res){
   if(res.req.body.vote === 'addUpVote') {
     sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
@@ -165,7 +157,6 @@ app.put('/recruits', function(req, res){
   res.json('');
 });
 
-// should be loggedIn
 app.get('/recruits', function(req, res){
   var usersArray = [];
   sequelize.query("SELECT * FROM Users WHERE role='recruit'").success(function(users) {
@@ -205,8 +196,6 @@ app.get('/recruits', function(req, res){
           upVote: userVotes[users[i].id].upVotes,
           downVote: userVotes[users[i].id].downVotes
         };
-        // console.log(users[i].location.split(','));
-        console.log(jsonUser);
         usersArray.push(jsonUser);
       }
       res.json(usersArray);
@@ -214,10 +203,11 @@ app.get('/recruits', function(req, res){
   });
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'user_location', 'user_about_me', 'user_birthday']}));
+app.get('/auth/facebook', passport.authenticate('facebook',
+  {scope: ['email', 'user_location', 'user_about_me', 'user_birthday']}));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', { failureRedirect: '/back#home' }),
   function(req, res){
     req.session.userId = req.user.id;
     User.find({ where: {id: req.session.userId}}).success(function(user) {

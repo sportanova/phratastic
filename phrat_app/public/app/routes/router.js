@@ -3,8 +3,7 @@ var Router = Backbone.Router.extend({
   routes: {
     'recruits': 'recruits',
     'recruitHome': 'recruitHome',
-    'loggedIn': 'loggedIn',
-    'home': 'home'
+    'home': 'home',
   },
 
   initialize: function() {
@@ -12,9 +11,9 @@ var Router = Backbone.Router.extend({
 
   home: function() {
     $('#main').empty();
-    console.log('home');
+    var headerView = new HeaderView();
     var homeView = new HomeView();
-    $('#main').append(homeView.render());
+    $('#main').append([headerView.render(), homeView.render()]);
   },
   
   recruits: function(){
@@ -30,4 +29,5 @@ var Router = Backbone.Router.extend({
     var registerView = new RegisterView({ model: registerModel });
     $('#main').append(registerView.render());
   }
+
 });
