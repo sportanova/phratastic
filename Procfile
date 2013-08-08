@@ -1,1 +1,0 @@
-web: node phrat_app/app.js
