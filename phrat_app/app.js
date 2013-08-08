@@ -46,7 +46,7 @@ var User;
 passport.use(new FacebookStrategy({
     clientID: '696227333737725',
     clientSecret: 'b5c82944f3f4dee207900526d32fa45c',
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+    callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function (){
