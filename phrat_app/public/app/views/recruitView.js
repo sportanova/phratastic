@@ -11,7 +11,7 @@ var RecruitView = Backbone.View.extend({
         <ul> \
           <li class="name"> <%= firstName %> <%= lastName %> </li> \
           <li class="birthday"> <%= birthday %> </li> \
-          <li class="location"> <%= city %>, <%= state %> </li> \
+          <li class="location"> <%= city %> <%= state %> </li> \
         </ul> \
         <div class="bio"> <%= bio %> </div> \
       </td> \

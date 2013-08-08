@@ -9,25 +9,26 @@ var Router = Backbone.Router.extend({
   initialize: function() {
   },
 
+  headerView : new HeaderView(),
+
   home: function() {
     $('#main').empty();
-    var headerView = new HeaderView();
     var homeView = new HomeView();
-    $('#main').append([headerView.render(), homeView.render()]);
+    $('#main').append([this.headerView.render(), homeView.render()]);
   },
   
   recruits: function(){
     $('#main').empty();
     app = new App();
     var appView = new AppView({model: app});
-    $('#main').append(appView.render());
+    $('#main').append([this.headerView.render(), appView.render()]);
   },
 
   recruitHome: function(){
     $('#main').empty();
     var registerModel = new RegisterModel();
     var registerView = new RegisterView({ model: registerModel });
-    $('#main').append(registerView.render());
+    $('#main').append([this.headerView.render(), registerView.render()]);
   }
 
 });
