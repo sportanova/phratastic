@@ -4,8 +4,11 @@ path = require('path'),
 app = express(),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
+dbInfo = require('./dbInfo.js'),
 Sequelize = require('sequelize'),
-sequelize = new Sequelize('test', 'root');
+sequelize = new Sequelize(dbInfo.d.db, dbInfo.d.user);
+
+console.log(dbInfo);
 
 passport.serializeUser(function(user, done){
   done(null, user);
