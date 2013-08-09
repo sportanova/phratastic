@@ -2,6 +2,7 @@ var express = require('express'),
 http = require('http'),
 path = require('path'),
 app = express(),
+requestHandler = require('./controllers/requestHandlers.js'),
 passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy,
 Sequelize = require('sequelize'),
@@ -35,9 +36,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', function(req, res) {
-  res.redirect('/back#home');
-});
+app.get('/', requestHandler.home);
 
 var User;
 passport.use(new FacebookStrategy({
@@ -104,15 +103,9 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-app.get('/back', function(req, res){
-  res.render('back');
-});
+app.get('/back', requestHandler.back);
 
-app.get('/loggedOut', function(req, res){
-  req.session.destroy(function(){
-  });
-  res.render('loggedOut', { title: 'Express' });
-});
+app.get('/loggedOut', requestHandler.logout);
 
 var loggedIn = function(req, res, next){
   if(req.session.userId){
@@ -122,27 +115,9 @@ var loggedIn = function(req, res, next){
   }
 };
 
-app.get('/home', loggedIn, function(req, res){
-  res.render('home');
-});
+app.get('/memberConfirm', requestHandler.memberConfirmGet);
 
-app.get('/memberConfirm', function(req, res){
-  User.find({ where: {id: req.session.userId}}).success(function(user) {
-    res.json(user);
-  });
-});
-
-app.post('/memberConfirm', function(req, res){
-  User.find({ where: {id: req.session.userId}}).success(function(user) {
-    if(res.req.body.confirm === 'nerd') {
-      user.role = 'member';
-      user.save().success(function() {});
-        res.redirect('/back#recruits');
-    } else {
-      res.redirect('/back#recruitHome');
-    }
-  });
-});
+app.post('/memberConfirm', requestHandler.memberConfirmPost);
 
 app.put('/recruits', function(req, res){
   if(res.req.body.vote === 'addUpVote') {
