@@ -155,3 +155,32 @@ body {
 }
 
 /*recruithomeView*/
+.memberKeyInfo {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.memberKey, .memberKeyForm {
+  display: inline;
+}
+
+.memberKeyInput {
+  border-radius: .8em;
+}
+
+.recruitInstructions {
+  text-align: center;
+  margin: 50px 0 0 25%;
+  border-radius: .8em;
+  background-color: #CCCACB;
+  width: 50%;
+}
+
+.recruitWatch {
+  padding-top: 10px;
+}
+
+.partyYouTube {
+  text-align: center;
+  /*margin-top: 5px;*/
+}
