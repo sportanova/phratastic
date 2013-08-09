@@ -6,10 +6,72 @@ body {
   background-image:url('../images/ticks.png');
 }
 
+/*homeView*/
+.title {
+  text-align: center;
+  font-size: 50px;
+  margin-top: 10px;
+}
+
+.tagline {
+  text-align: center;
+  margin-top: -35px;
+}
+
+.screenShot {
+  margin-left: 20px;
+  width: 646px;
+  border: solid;
+  float: left;
+}
+
+.features {
+  float: right;
+  margin-right: 90px;
+  font-size: 18px;
+}
+
+.features li {
+  margin-top: 10px;
+}
+
+.classname {
+  -moz-box-shadow:inset 0 1px 0 0 #f29c93;
+  -webkit-box-shadow:inset 0 1px 0 0 #f29c93;
+  box-shadow:inset 0 1px 0 0 #f29c93;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+  background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+  background-color:#fe1a00;
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+  border-radius:15px;
+  border:1px solid #d83526;
+  display:inline-block;
+  color:#ffffff;
+  font-family:arial;
+  font-size:20px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:1px 1px 0 #b23e35;
+  margin: 20px 0 0 180px;
+}.classname:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+  background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+  background-color:#ce0100;
+}.classname:active {
+  position:relative;
+  top:1px;
+}
+
+
 /*headerView*/
 .header {
   background: black;
   height: 60px;
+  width: 100%;
 }
 
 .login {
@@ -37,20 +99,21 @@ body {
 .picture img {
   width: 12em;
   border-radius: 2em;
+  margin-left: 15px;
 }
 
 .recruits {
   width: 90%;
   border-collapse: collapse;
+  margin: 0 0 0 70px;
 }
 
-ul {
+.recruitInfo ul {
   list-style-type: none;
 }
 
 .recruitInfo {
-  width: 45%;
-  /*background: red;*/
+  width: 80%;
   border-radius: 2em;
   height: 60px;
 }
@@ -58,13 +121,12 @@ ul {
 .recruitInfo ul {
   font-size: 18px;
   font-weight: bold;
-  /*background: gray;*/
-  margin: -80px 0 0 0;
+  position: relative;
+  top: 0;
 }
 
 .recruitInfo div {
-  /*background: green;*/
-  margin: 10px 0 0 15px;
+  margin: 20px 0 0 15px;
 }
 
 .recruitInfo ul li {
@@ -77,16 +139,19 @@ ul {
 .recruit td {
   border-bottom: solid gray 2px;
   padding: 10px 0 10px 0;
+  margin: 0 0 0 100px;
 }
 
 .name {
-  width: 45%;
+  width: 30%;
 }
 
 .location {
-  width: 45%;
+  width: 30%;
 }
 
 .birthday {
   width: 5%;
 }
+
+/*recruithomeView*/
