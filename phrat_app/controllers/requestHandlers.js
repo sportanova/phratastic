@@ -1,4 +1,6 @@
 var User = require('../models/User.js').User,
+passport = require('passport'),
+FacebookStrategy = require('passport-facebook').Strategy,
 Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root', process.env.mySQLPW);
 
@@ -79,4 +81,36 @@ exports.populateRecruitsList = function(req, res){
       res.json(usersArray);
     });
   });
-}
+};
+
+exports.vote = function(req, res){
+  if(res.req.body.vote === 'addUpVote') {
+    sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
+    });
+  } else if(res.req.body.vote === 'addDownVote') {
+    sequelize.query("INSERT INTO Votes (memberID, recruitID, downVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=1, upVote=0").success(function(users) {
+    });
+  }
+  res.json('');
+};
+
+exports.passportScope = {
+  pass: passport.authenticate('facebook',
+    {scope: ['email', 'user_location', 'user_about_me', 'user_birthday']}
+)};
+
+exports.passportCallback = function(req, res){
+    req.session.userId = req.user.id;
+    User.find({ where: {id: req.session.userId}}).success(function(user) {
+      if(user !== null) {
+        var role = user.dataValues.role;
+        if(role === 'recruit') {
+          res.redirect('/back#recruitHome');
+        } else if(role === 'member') {
+          res.redirect('/back#recruits');
+        }
+      } else {
+        res.redirect('/back#recruitHome');
+      }
+  });
+};

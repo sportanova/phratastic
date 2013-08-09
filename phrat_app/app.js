@@ -104,8 +104,14 @@ passport.use(new FacebookStrategy({
 ));
 
 app.get('/back', requestHandler.back);
-
 app.get('/loggedOut', requestHandler.logout);
+app.get('/memberConfirm', requestHandler.memberConfirmGet);
+app.post('/memberConfirm', requestHandler.memberConfirmPost);
+app.put('/recruits', requestHandler.vote);
+app.get('/recruits', requestHandler.populateRecruitsList);
+app.get('/auth/facebook', requestHandler.passportScope.pass);
+app.get('/auth/facebook/callback', passport.authenticate('facebook',
+  { failureRedirect: '/back#home' }), requestHandler.passportCallback);
 
 var loggedIn = function(req, res, next){
   if(req.session.userId){
@@ -115,43 +121,6 @@ var loggedIn = function(req, res, next){
   }
 };
 
-app.get('/memberConfirm', requestHandler.memberConfirmGet);
-
-app.post('/memberConfirm', requestHandler.memberConfirmPost);
-
-app.put('/recruits', function(req, res){
-  if(res.req.body.vote === 'addUpVote') {
-    sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=1").success(function(users) {
-    });
-  } else if(res.req.body.vote === 'addDownVote') {
-    sequelize.query("INSERT INTO Votes (memberID, recruitID, downVote) VALUES (" + req.session.userId + "," + res.req.body.id + "," + 1 + ") ON DUPLICATE KEY UPDATE downVote=1, upVote=0").success(function(users) {
-    });
-  }
-  res.json('');
-});
-
-app.get('/recruits', requestHandler.populateRecruitsList);
-
-app.get('/auth/facebook', passport.authenticate('facebook',
-  {scope: ['email', 'user_location', 'user_about_me', 'user_birthday']}));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/back#home' }),
-  function(req, res){
-    req.session.userId = req.user.id;
-    User.find({ where: {id: req.session.userId}}).success(function(user) {
-      if(user !== null) {
-        var role = user.dataValues.role;
-        if(role === 'recruit') {
-          res.redirect('/back#recruitHome');
-        } else if(role === 'member') {
-          res.redirect('/back#recruits');
-        }
-      } else {
-        res.redirect('/back#recruitHome');
-      }
-  });
-});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
