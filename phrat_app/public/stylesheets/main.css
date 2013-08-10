@@ -160,9 +160,6 @@ body {
 
 .name, .location, .birthday, .voteCount {
   font-family: 'Permanent Marker', cursive;
-  /*font-family: 'Russo One', sans-serif;*/
-  /*font-family: 'Righteous', cursive;*/
-  /*font-family: 'Carter One', cursive;*/
 }
 
 .name {

@@ -12,7 +12,7 @@ requestHandler = require('../controllers/requestHandlers.js');
 
 exports.routes = function(app) {
   config = require('../config/config.js').config(app);
-  app.get('/back', requestHandler.back);
+  app.get('/index', requestHandler.back);
   app.get('/', requestHandler.home);
   app.get('/loggedOut', requestHandler.logout);
   app.get('/memberConfirm', loggedIn, requestHandler.memberConfirmGet);
@@ -21,5 +21,5 @@ exports.routes = function(app) {
   app.get('/recruits', loggedIn, requestHandler.populateRecruitsList);
   app.get('/auth/facebook', requestHandler.passportScope.pass);
   app.get('/auth/facebook/callback', passport.authenticate('facebook',
-    { failureRedirect: '/back#home' }), requestHandler.passportCallback);
+    { failureRedirect: '/index#home' }), requestHandler.passportCallback);
 };

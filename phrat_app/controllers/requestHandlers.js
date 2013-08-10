@@ -5,11 +5,11 @@ Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root', process.env.mySQLPW);
 
 exports.home = function(req, res) {
-  res.redirect('/back#home');
+  res.redirect('/index#home');
 };
 
 exports.back = function(req, res){
-  res.render('back');
+  res.render('index');
 };
 
 exports.logout = function(req, res){
@@ -30,9 +30,9 @@ exports.memberConfirmPost = function(req, res){
     if(res.req.body.confirm === 'nerd') {
       user.role = 'member';
       user.save().success(function() {});
-        res.redirect('/back#recruits');
+        res.redirect('/index#recruits');
     } else {
-      res.redirect('/back#recruitHome');
+      res.redirect('/index#recruitHome');
     }
   });
 };
@@ -105,12 +105,12 @@ exports.passportCallback = function(req, res){
       if(user !== null) {
         var role = user.dataValues.role;
         if(role === 'recruit') {
-          res.redirect('/back#recruitHome');
+          res.redirect('/index#recruitHome');
         } else if(role === 'member') {
-          res.redirect('/back#recruits');
+          res.redirect('/index#recruits');
         }
       } else {
-        res.redirect('/back#recruitHome');
+        res.redirect('/index#recruitHome');
       }
   });
 };
