@@ -1,5 +1,4 @@
-var http = require('http'),
-express = require('express'),
+var express = require('express'),
 path = require('path'),
 loggedIn = require('../controllers/middleware.js').loggedIn,
 passport = require('passport'),
@@ -15,7 +14,8 @@ requestHandler = require('../controllers/requestHandlers.js');
 
 exports.routes = function(app) {
   app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
+  app.set('views', __dirname + '/../views');
+  console.log('view path', __dirname + '/../views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -26,7 +26,11 @@ exports.routes = function(app) {
   app.use(passport.session());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, '/../public')));
+  // development only
+  if ('development' == app.get('env')) {
+    app.use(express.errorHandler());
+  }
   app.get('/back', requestHandler.back);
   app.get('/', requestHandler.home);
   app.get('/loggedOut', requestHandler.logout);
