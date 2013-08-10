@@ -8,11 +8,16 @@ var HomeView = Backbone.View.extend({
         <h2 class="tagline"> Fraternity Recruitment for the 21st Century</h2> \
         <img class="screenShot" src="../images/screenShot.png"/> \
         <ul class="features"> \
+          <li class="featuresTitle"> Members: </li>\
           <li> View Everyone Rushing Your Fraternity In One Place </li>\
           <li> Vote on Recruits - Decide the Future of Your Fraternity </li>\
           <li> No More Data Entry - Let Facebook Do All the Work </li>\
         </ul> \
-        <a href="/auth/facebook" class="classname">Get Started</a> \
+        <ul class="recruitFeatures features"> \
+          <li class="featuresTitle"> Recruits: </li>\
+          <li> Automatically Submit Your Info to the Fraternity via FB </li>\
+        </ul> \
+        <div class="getStartedButton"> <a href="/auth/facebook" class="classname">Get Started</a> </div>\
        </div> \
       ');
   }

@@ -27,12 +27,27 @@ body {
 
 .features {
   float: right;
-  margin-right: 90px;
+  margin: 20px 90px 0 0;
   font-size: 18px;
 }
 
-.features li {
+.recruitFeatures {
   margin-top: 10px;
+}
+
+.features li {
+  margin-top: 4px;
+}
+
+.featuresTitle {
+  list-style-type: none;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.getStartedButton {
+  text-align: center;
 }
 
 .classname {
@@ -55,7 +70,7 @@ body {
   padding:6px 24px;
   text-decoration:none;
   text-shadow:1px 1px 0 #b23e35;
-  margin: 20px 0 0 180px;
+  margin: 20px 0 0 -40px;
 }.classname:hover {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
   background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
