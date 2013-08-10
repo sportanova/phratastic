@@ -17,7 +17,7 @@ var HomeView = Backbone.View.extend({
           <li class="featuresTitle"> Recruits: </li>\
           <li> Automatically Submit Your Info to the Fraternity via FB </li>\
         </ul> \
-        <div class="getStartedButton"> <a href="/auth/facebook" class="classname">Get Started</a> </div>\
+        <div class="getStarted"> <a href="/auth/facebook" class="getStartedButton">Get Started</a> </div>\
        </div> \
       ');
   }

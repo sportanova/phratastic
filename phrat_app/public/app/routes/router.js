@@ -11,7 +11,6 @@ var Router = Backbone.Router.extend({
     this.headerView = new HeaderView();
   },
 
-
   home: function() {
     this.$main.empty();
     var homeView = new HomeView();
