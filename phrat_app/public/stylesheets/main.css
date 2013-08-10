@@ -8,6 +8,7 @@ body {
 
 /*homeView*/
 .title {
+  font-family: 'Carter One', cursive;
   text-align: center;
   font-size: 50px;
   margin-top: 10px;
@@ -155,6 +156,13 @@ body {
   border-bottom: solid gray 2px;
   padding: 10px 0 10px 0;
   margin: 0 0 0 100px;
+}
+
+.name, .location, .birthday, .voteCount {
+  font-family: 'Permanent Marker', cursive;
+  /*font-family: 'Russo One', sans-serif;*/
+  /*font-family: 'Righteous', cursive;*/
+  /*font-family: 'Carter One', cursive;*/
 }
 
 .name {

@@ -30,5 +30,4 @@ var Router = Backbone.Router.extend({
     var registerView = new RegisterView({ model: registerModel });
     $('#main').append([this.headerView.render(), registerView.render()]);
   }
-
 });

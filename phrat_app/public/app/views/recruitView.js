@@ -15,13 +15,13 @@ var RecruitView = Backbone.View.extend({
           <li> \
             <ul> \
               <li> <button class="upVote <%= id %>"> Up </button> </li> \
-              <li> <%= upVote %> </li> \
+              <li class="voteCount"> <%= upVote %> </li> \
             </ul>\
           </li> \
           <li> \
             <ul> \
               <li> <button class="downVote <%= id %>"> Down </button> </li> \
-              <li> <%= downVote %> </li> \
+              <li class="voteCount"> <%= downVote %> </li> \
             </ul>\
           </li> \
         </ul> \
