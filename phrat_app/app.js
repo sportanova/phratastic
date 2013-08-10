@@ -4,17 +4,13 @@ path = require('path'),
 app = express(),
 requestHandler = require('./controllers/requestHandlers.js'),
 passport = require('passport'),
+passportInitialization = require('./controllers/passport.js'),
+passportSerialize = require('./controllers/passport.js').pass,
+passportDeserialize = require('./controllers/passport.js').pass,
+loggedIn = require('./controllers/middleware.js').loggedIn,
 FacebookStrategy = require('passport-facebook').Strategy,
 Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root', process.env.mySQLPW);
-
-passport.serializeUser(function(user, done){
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done){
-  done(null, obj);
-});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -36,90 +32,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', requestHandler.home);
-
-var User;
-passport.use(new FacebookStrategy({
-    clientID: process.env.phratasticDevClientID,
-    clientSecret: process.env.phratasticDevSecretID,
-    callbackURL: "/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function (){
-      User = sequelize.define('User', {
-        id: Sequelize.STRING,
-        f_name: {
-          type: Sequelize.STRING,
-          defaultValue: ''
-        },
-        l_name: {
-          type: Sequelize.STRING,
-          defaultValue: ''
-        },
-        email: {
-          type: Sequelize.STRING,
-          defaultValue: ''
-        },
-        location: {
-          type: Sequelize.STRING,
-          defaultValue: ''
-        },
-        birthday: {
-          type: Sequelize.STRING,
-          defaultValue: 0
-        },
-        bio: {
-          type: Sequelize.STRING,
-          defaultValue: ''
-        },
-        role: {
-          type: Sequelize.STRING,
-          defaultValue: 'recruit'
-        }
-      });
-
-      User.find({ where: {id: profile.id}}).success(function(user){
-        if(user){
-        } else {
-          User.sync().success(function() {
-            newUser = User.build({
-              id: profile.id,
-              f_name: profile.name.givenName,
-              l_name: profile.name.familyName,
-              email: profile.emails[0].value,
-              location: typeof profile._json.location === 'object' ? profile._json.location.name : '',
-              birthday: profile._json.birthday,
-              bio: profile._json.bio
-            });
-            newUser.save().success(function() {
-            });
-          });
-          sequelize.query("INSERT INTO Votes (memberID, recruitID, upVote, downVote) VALUES (" + 1 + "," + profile.id + "," + 0 + "," + 0 + ") ON DUPLICATE KEY UPDATE downVote=0, upVote=0").success(function(users) {
-          });
-        }
-      });
-    return done(null, profile);
-    });
-  }
-));
-
 app.get('/back', requestHandler.back);
+app.get('/', requestHandler.home);
 app.get('/loggedOut', requestHandler.logout);
-app.get('/memberConfirm', requestHandler.memberConfirmGet);
-app.post('/memberConfirm', requestHandler.memberConfirmPost);
-app.put('/recruits', requestHandler.vote);
-app.get('/recruits', requestHandler.populateRecruitsList);
+app.get('/memberConfirm', loggedIn, requestHandler.memberConfirmGet);
+app.post('/memberConfirm', loggedIn, requestHandler.memberConfirmPost);
+app.put('/recruits', loggedIn, requestHandler.vote);
+app.get('/recruits', loggedIn, requestHandler.populateRecruitsList);
 app.get('/auth/facebook', requestHandler.passportScope.pass);
 app.get('/auth/facebook/callback', passport.authenticate('facebook',
   { failureRedirect: '/back#home' }), requestHandler.passportCallback);
-
-var loggedIn = function(req, res, next){
-  if(req.session.userId){
-    next();
-  } else {
-    res.redirect('/');
-  }
-};
 
 
 http.createServer(app).listen(app.get('port'), function(){
