@@ -70,7 +70,7 @@ exports.populateRecruitsList = function(req, res){
           firstName: users[i].f_name,
           lastName: users[i].l_name,
           bio: users[i].bio,
-          city: location[0] || '',
+          city: location[0] || 'N/A',
           state: location[1] || '',
           birthday: new Date().getFullYear() - parseInt(users[i].birthday.substr(6,4)),
           upVote: userVotes[users[i].id].upVotes,
