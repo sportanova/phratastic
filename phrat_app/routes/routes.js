@@ -1,5 +1,4 @@
 var express = require('express'),
-path = require('path'),
 loggedIn = require('../controllers/middleware.js').loggedIn,
 passport = require('passport'),
 passport = require('passport'),
@@ -11,26 +10,8 @@ Sequelize = require('sequelize'),
 sequelize = new Sequelize('test', 'root', process.env.mySQLPW),
 requestHandler = require('../controllers/requestHandlers.js');
 
-
 exports.routes = function(app) {
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/../views');
-  console.log('view path', __dirname + '/../views');
-  app.set('view engine', 'jade');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.cookieParser());
-  app.use(express.bodyParser());
-  app.use(express.session({ secret: 'asfda4845sdfas0sadf2' }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, '/../public')));
-  // development only
-  if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
-  }
+  config = require('../config/config.js').config(app);
   app.get('/back', requestHandler.back);
   app.get('/', requestHandler.home);
   app.get('/loggedOut', requestHandler.logout);

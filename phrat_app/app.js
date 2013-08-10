@@ -1,6 +1,5 @@
 var express = require('express'),
 http = require('http'),
-path = require('path'),
 app = express(),
 routes = require('./routes/routes.js').routes(app);
 
