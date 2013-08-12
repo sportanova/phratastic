@@ -7,6 +7,6 @@ var HeaderView = Backbone.View.extend({
         <a class="log login" href="/auth/facebook"> Login </a> \
         <a class="log logout" href="/loggedOut"> Logout </a> \
       </div> \
-      ');
+    ');
   }
 });

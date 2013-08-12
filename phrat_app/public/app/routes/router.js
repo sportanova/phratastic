@@ -4,6 +4,7 @@ var Router = Backbone.Router.extend({
     'recruits': 'recruits',
     'recruitHome': 'recruitHome',
     'home': 'home',
+    'logout': 'logout',
   },
 
   initialize: function() {
@@ -29,5 +30,11 @@ var Router = Backbone.Router.extend({
     var registerModel = new RegisterModel();
     var registerView = new RegisterView({ model: registerModel });
     this.$main.append([this.headerView.render(), registerView.render()]);
+  },
+
+  logout: function(){
+    this.$main.empty();
+    var logoutView = new LogoutView();
+    this.$main.append([this.headerView.render(), logoutView.render()]);
   }
 });

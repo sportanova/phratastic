@@ -1,5 +1,5 @@
 var express = require('express'),
-loggedIn = require('../controllers/middleware.js').loggedIn,
+middleware = require('../controllers/middleware.js'),
 passport = require('passport'),
 passportInitialization = require('../controllers/passport.js'),
 passportSerialize = require('../controllers/passport.js').pass,
@@ -13,11 +13,11 @@ exports.routes = function(app) {
   config = require('../config/config.js').config(app);
   app.get('/index', requestHandler.back);
   app.get('/', requestHandler.home);
-  app.get('/loggedOut', requestHandler.logout);
-  app.get('/memberConfirm', loggedIn, requestHandler.memberConfirmGet);
-  app.post('/memberConfirm', loggedIn, requestHandler.memberConfirmPost);
-  app.put('/recruits', loggedIn, requestHandler.vote);
-  app.get('/recruits', loggedIn, requestHandler.populateRecruitsList);
+  app.get('/loggedOut', middleware.logout, requestHandler.logout);
+  app.get('/memberConfirm', middleware.loggedIn, requestHandler.memberConfirmGet);
+  app.post('/memberConfirm', middleware.loggedIn, requestHandler.memberConfirmPost);
+  app.put('/recruits', middleware.loggedIn, requestHandler.vote);
+  app.get('/recruits', middleware.loggedIn, requestHandler.populateRecruitsList);
   app.get('/auth/facebook', requestHandler.passportScope.pass);
   app.get('/auth/facebook/callback', passport.authenticate('facebook',
     { failureRedirect: '/index#home' }), requestHandler.passportCallback);

@@ -13,9 +13,7 @@ exports.back = function(req, res){
 };
 
 exports.logout = function(req, res){
-  req.session.destroy(function(){
-  });
-  res.render('loggedOut');
+  res.redirect('/index#logout');
 };
 
 exports.memberConfirmGet = function(req, res){
