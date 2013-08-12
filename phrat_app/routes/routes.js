@@ -1,7 +1,6 @@
 var express = require('express'),
 loggedIn = require('../controllers/middleware.js').loggedIn,
 passport = require('passport'),
-passport = require('passport'),
 passportInitialization = require('../controllers/passport.js'),
 passportSerialize = require('../controllers/passport.js').pass,
 passportDeserialize = require('../controllers/passport.js').pass,
