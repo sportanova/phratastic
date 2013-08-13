@@ -12,38 +12,6 @@ exports.passportCreateUser = {
     },
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function (){
-        User = sequelize.define('User', {
-          id: Sequelize.STRING,
-          f_name: {
-            type: Sequelize.STRING,
-            defaultValue: ''
-          },
-          l_name: {
-            type: Sequelize.STRING,
-            defaultValue: ''
-          },
-          email: {
-            type: Sequelize.STRING,
-            defaultValue: ''
-          },
-          location: {
-            type: Sequelize.STRING,
-            defaultValue: ''
-          },
-          birthday: {
-            type: Sequelize.STRING,
-            defaultValue: 0
-          },
-          bio: {
-            type: Sequelize.STRING,
-            defaultValue: ''
-          },
-          role: {
-            type: Sequelize.STRING,
-            defaultValue: 'recruit'
-          }
-        });
-
         User.find({ where: {id: profile.id}}).success(function(user){
           if(user){
           } else {
