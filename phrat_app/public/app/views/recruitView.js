@@ -14,14 +14,14 @@ var RecruitView = Backbone.View.extend({
           <li class="location"> <%= city %> <%= state %> </li> \
           <li> \
             <ul> \
-              <li> <button class="upVote <%= id %>"> Up </button> </li> \
-              <li class="voteCount"> <%= upVote %> </li> \
+              <li> <input type="image" src="../../images/upArrow.png" class="upVote <%= id %>" /> </li> \
+              <li class="voteCount voteCountUp"> <%= upVote %> </li> \
             </ul>\
           </li> \
           <li> \
-            <ul> \
-              <li> <button class="downVote <%= id %>"> Down </button> </li> \
-              <li class="voteCount"> <%= downVote %> </li> \
+            <ul class="downVoteArea"> \
+              <li> <input type="image" src="../../images/downArrow.png" class="downVote <%= id %>" /> </li> \
+              <li class="voteCount voteCountDown"> <%= downVote %> </li> \
             </ul>\
           </li> \
         </ul> \

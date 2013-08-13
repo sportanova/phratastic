@@ -158,6 +158,25 @@ body {
   margin: 0 0 0 100px;
 }
 
+.downVote, .upVote {
+  width: 30px;
+  position: relative;
+  top: 10px;
+}
+
+.voteCountUp {
+  color: green;
+}
+
+.voteCountDown {
+  color: red;
+}
+
+.downVoteArea {
+  position: relative;
+  right: 20px;
+}
+
 .name, .location, .birthday, .voteCount {
   font-family: 'Permanent Marker', cursive;
 }
