@@ -3,11 +3,14 @@ Phratastic
 
 > Phratastic brings the fratarnity recruitment process online, and lets fraternity members view and vote on prospective members.
 
-![Alt text](http://i.imgur.com/m6GuPXF.png)
-![Alt text](http://i.imgur.com/QjrXRTM.png)
+![Alt text](http://i.imgur.com/ix1Sqyf.png)
 
-Tech Stack
-======
+One of the most challenging parts of the project was integrating Facebook into the product. I used passport.js to help with the oAUTH login, and now I use the user's Facebook profile to autocreate the user's Phratastic profile.
+
+![Alt text](http://i.imgur.com/m6GuPXF.png)
+
+### Tech Stack
+
 - Backbone.js
 - Node.js
 - Express
