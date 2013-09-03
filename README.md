@@ -1,7 +1,7 @@
-Phratastic
+Phratastic bit.ly/14zUTFG
 ==========
 
-> Phratastic brings the fratarnity recruitment process online, and lets fraternity members view and vote on prospective members. bit.ly/14zUTFG
+> Phratastic brings the fratarnity recruitment process online, and lets fraternity members view and vote on prospective members.
 
 ![Alt text](http://i.imgur.com/ix1Sqyf.png)
 
