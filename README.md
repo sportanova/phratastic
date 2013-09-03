@@ -14,6 +14,8 @@ One of the most challenging parts of the project was integrating Facebook into t
 - Backbone.js
 - Node.js
 - Express
+- MySQL
+- Sequelize (ORM)
 - Underscore.js
 - jQuery
 - Facebook API
