@@ -2,6 +2,7 @@ Phratastic bit.ly/14zUTFG
 ==========
 
 > Phratastic brings the fratarnity recruitment process online, and lets fraternity members view and vote on prospective members.
+Deployed App: bit.ly/18ScNWx
 
 ![Alt text](http://i.imgur.com/ix1Sqyf.png)
 
